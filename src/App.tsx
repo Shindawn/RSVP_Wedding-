@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { ArrowDown, ArrowRight, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, X } from 'lucide-react';
 
@@ -38,22 +38,30 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [rsvpOpen, setRsvpOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [daysLeft, setDaysLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [countdownPulse, setCountdownPulse] = useState(false);
   const [showFullEntourage, setShowFullEntourage] = useState(false);
   const [previewSlide, setPreviewSlide] = useState(0);
   const [previewPaused, setPreviewPaused] = useState(false);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   useEffect(() => {
     const weddingDate = new Date('2027-01-30T13:30:00+08:00').getTime();
     const updateCountdown = () => {
-      setDaysLeft(Math.max(0, Math.ceil((weddingDate - Date.now()) / 86400000)));
+      const now = Date.now();
+      const diff = Math.max(0, weddingDate - now);
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      setTimeLeft({ days, hours, minutes, seconds });
       setCountdownPulse(true);
-      window.setTimeout(() => setCountdownPulse(false), 850);
+      window.setTimeout(() => setCountdownPulse(false), 650);
     };
     updateCountdown();
-    const timer = window.setInterval(updateCountdown, 60000);
+    const timer = window.setInterval(updateCountdown, 1000);
     return () => window.clearInterval(timer);
   }, []);
 
@@ -81,6 +89,15 @@ function App() {
     return () => revealObserver.disconnect();
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    }
+  }, [isOpen]);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMenuOpen(false);
@@ -91,34 +108,84 @@ function App() {
       <div className={`invitation-cover ${isOpen ? 'invitation-cover--open' : ''}`} aria-hidden={isOpen}>
         <div className="cover-grain" />
         <div className="cover-copy"><span className="cover-logo">C <em>&</em> C</span><span className="cover-intro">A wedding invitation</span><h1>Charlon <i>&</i> Chilzia</h1><span className="cover-date">30 · 01 · 2027</span></div>
-        <button className="invitation-card" onClick={() => setIsOpen(true)} aria-label="Open Charlon and Chilzia's wedding invitation">
+        <button className="invitation-card" onClick={() => { setIsOpen(true); if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.volume = 0.25; audioRef.current.play().catch(() => {}); } }} aria-label="Open Charlon and Chilzia's wedding invitation">
           <span className="invitation-card-glow" />
           <img src="/images/invitation-envelope.png" alt="Blue floral wedding invitation envelope" />
         </button>
-        <button className="open-invitation" onClick={() => setIsOpen(true)}>Tap the card to open</button>
+        <button className="open-invitation" onClick={() => { setIsOpen(true); if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.volume = 0.25; audioRef.current.play().catch(() => {}); } }}>Tap the envelope</button>
       </div>
 
-      <header className="topbar"><button className="brand-mark" onClick={() => scrollTo('home')} aria-label="Back to top">C<span>&</span>C</button><nav className={menuOpen ? 'nav-links nav-links--visible' : 'nav-links'}><button onClick={() => scrollTo('story')}>Our story</button><button onClick={() => scrollTo('details')}>The details</button><button onClick={() => scrollTo('entourage')}>Entourage</button><button onClick={() => scrollTo('gallery')}>Gallery</button><button onClick={() => scrollTo('faqs')}>FAQs</button></nav><button className="rsvp-pill" onClick={() => setRsvpOpen(true)}>RSVP <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button></header>
+      <audio ref={audioRef} src="/audio/bg-music.mp3" preload="auto" loop />
 
-      <section className={`hero ${isOpen ? 'hero--introduced' : ''}`} id="home"><div className="hero-image" style={{ backgroundImage: `url(${heroImage})` }} /><div className="hero-overlay" /><div className="hero-content"><p className="eyebrow hero-eyebrow">We’re getting married</p><h2 className="hero-names" aria-label="Charlon and Chilzia"><span className="typed-name typed-name--first" aria-hidden="true">Charlon</span><span className="typed-join" aria-hidden="true">and</span><i className="typed-name typed-name--second" aria-hidden="true">Chilzia</i></h2><div className="hero-meta"><span>January 30, 2027</span><span className="meta-rule" /><span>Naga City, Camarines Sur</span></div><button className="text-link light" onClick={() => scrollTo('story')}>Discover our story <ArrowDown size={16} /></button></div><div className="hero-vertical">CHARLON & CHILZIA <span>•</span> 2027</div></section>
+      <header className="topbar"><button className="brand-mark" onClick={() => scrollTo('home')} aria-label="Back to top"><img src="/images/cc-logo-white.png" alt="" /></button><nav className={menuOpen ? 'nav-links nav-links--visible' : 'nav-links'}><button onClick={() => scrollTo('story')}>Our story</button><button onClick={() => scrollTo('details')}>The details</button><button onClick={() => scrollTo('entourage')}>Entourage</button><button onClick={() => scrollTo('gallery')}>Gallery</button><button onClick={() => scrollTo('faqs')}>FAQs</button></nav><button className="rsvp-pill" onClick={() => setRsvpOpen(true)}>RSVP <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button></header>
 
-      <section className="intro-section section-pad reveal-on-scroll" id="story"><div className="section-label"><span>01</span><span className="label-line" /><span>OUR STORY</span></div><div className="story-grid"><div><p className="eyebrow blue">A note from us</p><h2 className="display-heading">The best things<br /><i>happen unexpectedly.</i></h2><p className="body-copy">Somehow, in the middle of ordinary days, we found something extraordinary. What started as a quiet hello became a life we never want to stop choosing.</p><p className="body-copy">We’re so grateful to be surrounded by the people who have shaped our story. Please join us as we begin our next chapter together.</p><div className="signature">C <span>&</span> C</div></div><div className="story-image-wrap"><img src={detailImage} alt="A newlywed couple by the water" /><span className="image-caption">where our forever begins</span></div></div></section>
+      <section className={`hero ${isOpen ? 'hero--introduced' : ''}`} id="home"><div className="hero-image" style={{ backgroundImage: `url(${heroImage})` }} /><div className="hero-overlay" /><div className="hero-content"><p className="eyebrow hero-eyebrow">💙We’re getting married!</p><h2 className="hero-names" aria-label="Charlon and Chilzia"><span className="typed-name typed-name--first" aria-hidden="true">Charlon</span><span className="typed-join" aria-hidden="true">and</span><i className="typed-name typed-name--second" aria-hidden="true">Chilzia</i></h2><div className="hero-meta"><span>January 30, 2027</span><span className="meta-rule" /><span>Naga City, Camarines Sur</span></div><button className="text-link light" onClick={() => scrollTo('story')}>Kindly RSVP </button></div><div className="hero-vertical">CHARLON & CHILZIA <span>•</span> 2027</div></section>
 
-      <section className="details-section section-pad reveal-on-scroll" id="details"><div className="section-label light-label"><span>02</span><span className="label-line" /><span>THE DETAILS</span></div><div className="details-heading"><div><p className="eyebrow">Save the date</p><h2 className="display-heading sliding-heading"><span>A day made</span><i>for celebration.</i></h2></div><div className={`countdown ${countdownPulse ? 'countdown--pulse' : ''}`}><strong key={daysLeft} aria-label={`${daysLeft} days`}>{Array.from(String(daysLeft)).map((digit, index) => <i className="countdown-digit" style={{ '--digit-index': index } as CSSProperties} aria-hidden="true" key={`${digit}-${index}`}>{digit}</i>)}</strong><span>days until<br />we say “I do”</span></div></div><div className="event-cards"><article className="event-card"><div className="event-icon"><Flower2 size={22} /></div><p className="eyebrow">The ceremony</p><h3>Archbishop<br />Palace Chapel</h3><p className="event-info"><Clock3 size={15} /> 1:30 in the afternoon</p><p className="event-info"><MapPin size={15} /> Naga City, Camarines Sur</p><button className="text-link" onClick={() => scrollTo('map')}>View location <ArrowRight size={15} /></button></article><article className="event-card"><div className="event-icon"><Music2 size={22} /></div><p className="eyebrow">The reception</p><h3>UMA Hotel<br />+ Residences</h3><p className="event-info"><Clock3 size={15} /> 5:00 in the evening</p><p className="event-info"><MapPin size={15} /> Magsaysay Avenue, Naga</p><button className="text-link" onClick={() => scrollTo('map')}>View location <ArrowRight size={15} /></button></article></div><div className="timeline-heading"><Clock3 size={17} /><span>Our timeline of the day</span></div><div className="timeline"><div><UsersRound /><span>12:30</span><small>Guest arrival</small></div><i /><div><Church /><span>1:30</span><small>Ceremony</small></div><i /><div><Camera /><span>2:30</span><small>Photos</small></div><i /><div><GlassWater /><span>5:00</span><small>Reception</small></div><i /><div><Music2 /><span>6:00</span><small>Dinner & dancing</small></div></div></section>
+      <section className="intro-section section-pad reveal-on-scroll" id="story"><video className="flower-bloom flower-bloom--story" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" /><div className="section-label"><span>01</span><span className="label-line" /><span>OUR STORY</span></div><div className="story-grid"><div><p className="eyebrow blue">Bible Verse</p><h2 className="display-heading">The best things<br /><i>happen unexpectedly.</i></h2><p className="body-copy">Somehow, in the middle of ordinary days, we found something extraordinary. What started as a quiet hello became a life we never want to stop choosing.</p><p className="body-copy">We’re so grateful to be surrounded by the people who have shaped our story. Please join us as we begin our next chapter together.</p><div className="signature"><img src="/images/cc-logo-blue.png" alt="Charlon and Chilzia monogram" /></div></div><div className="story-image-wrap"><img src={detailImage} alt="A newlywed couple by the water" /><span className="image-caption">where our forever begins</span></div></div></section>
+
+      <section className="details-section section-pad reveal-on-scroll" id="details">
+        <div className="section-label light-label"><span>02</span><span className="label-line" /><span>THE DETAILS</span></div>
+        <div className="details-heading">
+          <div className="details-heading-inner">
+            <p className="eyebrow">Until I say "I do"</p>
+            <div className={`countdown ${countdownPulse ? 'countdown--pulse' : ''}`}>
+              <div className="time-row">
+                <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.days} days`}>{String(timeLeft.days).padStart(2, '0')}</div><div className="time-label">Days</div></div>
+                <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.hours} hours`}>{String(timeLeft.hours).padStart(2, '0')}</div><div className="time-label">Hours</div></div>
+                <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.minutes} minutes`}>{String(timeLeft.minutes).padStart(2, '0')}</div><div className="time-label">Minutes</div></div>
+                <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.seconds} seconds`}>{String(timeLeft.seconds).padStart(2, '0')}</div><div className="time-label">Seconds</div></div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+        <div className="event-cards">
+          <article className="event-card">
+            <div className="event-icon"><Flower2 size={22} /></div>
+            <p className="eyebrow">The ceremony</p>
+            <h3>Archbishop<br />Palace Chapel</h3>
+            <p className="event-info"><Clock3 size={15} /> 1:30 in the afternoon</p>
+            <p className="event-info"><MapPin size={15} /> Naga City, Camarines Sur</p>
+            <a className="text-link" href="https://maps.app.goo.gl/CM897Wko3joafugn6" target="_blank" rel="noopener noreferrer" aria-label="Open ceremony location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
+          </article>
+          <article className="event-card">
+            <div className="event-icon"><Music2 size={22} /></div>
+            <p className="eyebrow">The reception</p>
+            <h3>UMA Hotel<br />+ Residences</h3>
+            <p className="event-info"><Clock3 size={15} /> 5:00 in the evening</p>
+            <p className="event-info"><MapPin size={15} /> Magsaysay Avenue, Naga</p>
+            <a className="text-link" href="https://maps.app.goo.gl/BQUbJPR3jdWKx5Bq8" target="_blank" rel="noopener noreferrer" aria-label="Open UMA Hotel location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
+          </article>
+        </div>
+
+        <div className="timeline-heading"><Clock3 size={17} /><span>Our timeline of the day</span></div>
+        <div className="timeline">
+          <div><UsersRound /><span>12:30</span><small>Guest arrival</small></div>
+          <i />
+          <div><Church /><span>1:30</span><small>Ceremony</small></div>
+          <i />
+          <div><Camera /><span>2:30</span><small>Photos</small></div>
+          <i />
+          <div><GlassWater /><span>5:00</span><small>Reception</small></div>
+          <i />
+          <div><Music2 /><span>6:00</span><small>Dinner & dancing</small></div>
+        </div>
+      </section>
 
       <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="center-heading"><p className="eyebrow blue">With our favorite people</p><AnimatedHeading lines={[{ text: 'The ones who make' }, { text: 'our story complete.', italic: true }]} /></div><div className="people-grid"><div><p className="eyebrow blue">Matron of honor</p><h3>Liza Mendoza</h3><p className="muted">The calm in every storm<br />and our forever friend.</p></div><div><p className="eyebrow blue">Maid of honor</p><h3>Angelica Santos</h3><p className="muted">A little bit of sunshine<br />in human form.</p></div><div><p className="eyebrow blue">Best man</p><h3>Joshua Garcia</h3><p className="muted">Brother by choice,<br />family by heart.</p></div></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className="entourage-group" key={group.title}><p className="eyebrow blue">{group.title}</p>{group.names.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
 
       <section className="dress-section section-pad reveal-on-scroll"><div className="dress-content"><p className="eyebrow">Dress code</p><AnimatedHeading lines={[{ text: 'Dusty blue' }, { text: 'and formal.', italic: true }]} /><p className="body-copy">We would love to see you in soft, romantic tones. Gentlemen in navy, charcoal, or dusty blue; ladies in ice blue, champagne, or silver.</p><div className="swatches"><span className="swatch ice" /><span className="swatch dusty" /><span className="swatch navy" /><span className="swatch silver" /><span className="swatch champagne" /></div><p className="tiny-note">Please avoid wearing white.</p></div><div className="dress-image" style={{ backgroundImage: `url(${heroImage})` }} /></section>
 
-      <section className="gallery-section section-pad reveal-on-scroll" id="gallery"><div className="section-label"><span>04</span><span className="label-line" /><span>A LITTLE PREVIEW</span></div><div className="gallery-heading"><AnimatedHeading lines={[{ text: 'Moments we' }, { text: 'keep close.', italic: true }]} /><p className="body-copy">A few frames from the beginning of our forever.</p></div><div className="gallery-grid"><div className="gallery-carousel gallery-img-1" onMouseEnter={() => setPreviewPaused(true)} onMouseLeave={() => setPreviewPaused(false)} onFocus={() => setPreviewPaused(true)} onBlur={() => setPreviewPaused(false)}><img key={previewSlides[previewSlide]} className="gallery-img carousel-photo" src={previewSlides[previewSlide]} alt={`Wedding preview ${previewSlide + 1} of ${previewSlides.length}`} /><div className="carousel-dots" aria-label="Choose a preview photo">{previewSlides.map((image, index) => <button className={previewSlide === index ? 'carousel-dot carousel-dot--active' : 'carousel-dot'} onClick={() => setPreviewSlide(index)} aria-label={`Show preview photo ${index + 1}`} aria-current={previewSlide === index ? 'true' : undefined} key={image} />)}</div></div>{galleryImages.slice(1).map((image, index) => <img key={image} className={`gallery-img gallery-img-${index + 2}`} src={image} alt="Wedding moment" />)}</div></section>
+      <section className="gallery-section section-pad reveal-on-scroll" id="gallery"><div className="section-label"><span>04</span><span className="label-line" /><span>GALLERY</span></div><div className="gallery-heading"><AnimatedHeading lines={[{ text: 'Moments we' }, { text: 'keep close.', italic: true }]} /><p className="body-copy">A few frames from the beginning of our forever.</p></div><div className="gallery-grid"><div className="gallery-carousel gallery-img-1" onMouseEnter={() => setPreviewPaused(true)} onMouseLeave={() => setPreviewPaused(false)} onFocus={() => setPreviewPaused(true)} onBlur={() => setPreviewPaused(false)}><img key={previewSlides[previewSlide]} className="gallery-img carousel-photo" src={previewSlides[previewSlide]} alt={`Wedding preview ${previewSlide + 1} of ${previewSlides.length}`} /><div className="carousel-dots" aria-label="Choose a preview photo">{previewSlides.map((image, index) => <button className={previewSlide === index ? 'carousel-dot carousel-dot--active' : 'carousel-dot'} onClick={() => setPreviewSlide(index)} aria-label={`Show preview photo ${index + 1}`} aria-current={previewSlide === index ? 'true' : undefined} key={image} />)}</div></div>{galleryImages.slice(1).map((image, index) => <img key={image} className={`gallery-img gallery-img-${index + 2}`} src={image} alt="Wedding moment" />)}</div></section>
 
-      <section className="rsvp-section section-pad reveal-on-scroll" id="rsvp"><div className="rsvp-card"><div className="section-label light-label"><span>05</span><span className="label-line" /><span>RSVP</span></div><p className="eyebrow">We hope you can make it</p><h2 className="display-heading">Will you join us<br /><i>on our big day?</i></h2><p className="body-copy">Kindly reply by January 8, 2027. Your presence would mean the world to us.</p><button className="button-light" onClick={() => setRsvpOpen(true)}>Respond to invitation <ArrowRight size={16} /></button></div></section>
+      <section className="rsvp-section section-pad reveal-on-scroll" id="rsvp"><video className="flower-bloom flower-bloom--rsvp" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" /><div className="rsvp-card"><div className="section-label light-label"><span>05</span><span className="label-line" /><span>RSVP</span></div><p className="eyebrow">We hope you can make it</p><h2 className="display-heading">Will you join us<br /><i>on our big day?</i></h2><p className="body-copy">Kindly reply by January 8, 2027. Your presence would mean the world to us.</p><button className="button-light" onClick={() => setRsvpOpen(true)}>Respond to invitation <ArrowRight size={16} /></button></div></section>
 
       <section className="faq-section section-pad reveal-on-scroll" id="faqs"><div className="faq-intro"><p className="eyebrow blue">Good to know</p><AnimatedHeading lines={[{ text: 'Questions,' }, { text: 'answered.', italic: true }]} /><p className="body-copy">We’ve gathered a few helpful details so you can simply enjoy the day.</p></div><div className="faq-list">{['Can I bring a plus one?', 'What time should I arrive?', 'Is there parking available?', 'Will the event be indoors or outdoors?'].map((question, index) => <div className="faq-item" key={question}><button onClick={() => setActiveFaq(activeFaq === index ? null : index)}><span>{question}</span><ChevronDown className={activeFaq === index ? 'chevron-up' : ''} size={17} /></button>{activeFaq === index && <p>{index === 0 ? 'Please refer to your invitation for your guest details. We kindly ask that we celebrate with the guests named on each invitation.' : index === 1 ? 'Guest arrival begins at 12:30 in the afternoon. We recommend arriving a little early so you can settle in.' : index === 2 ? 'Yes, parking is available at both venues for wedding guests.' : 'The ceremony is indoors, followed by an indoor reception.'}</p>}</div>)}</div></section>
 
-      <footer className="footer reveal-on-scroll" id="map"><img className="footer-logo" src="/images/cc-logo-white.png" alt="Charlon and Chilzia monogram" /><p className="eyebrow">See you on our big day</p><AnimatedHeading className="footer-names" lines={[{ text: 'Charlon & Chilzia' }]} /><p>30 · 01 · 2027 · Naga City, Philippines</p><div className="footer-bottom"><span>With love, always.</span><span>© 2027 C & C</span></div></footer>
+      <footer className="footer reveal-on-scroll" id="map"><img className="footer-logo" src="/images/cc-logo-white.png" alt="Charlon and Chilzia monogram" /><p className="eyebrow">See you on our big day</p><AnimatedHeading className="footer-names" lines={[{ text: 'Charlon & Chilzia' }]} /><p>30 · 01 · 2027 · Naga City, Philippines</p><div className="footer-bottom"><span>With love, always.</span><span>© 2027 C | C</span></div></footer>
 
-      {rsvpOpen && <div className="modal-backdrop" onClick={() => setRsvpOpen(false)}><div className="rsvp-modal" onClick={event => event.stopPropagation()}><button className="modal-close" onClick={() => setRsvpOpen(false)} aria-label="Close RSVP"><X size={18} /></button>{submitted ? <div className="success-state"><div className="success-icon"><Check /></div><p className="eyebrow blue">Thank you</p><h2 className="display-heading">We’ll see you<br /><i>on the big day.</i></h2><p className="body-copy">Your response has been noted. We can’t wait to celebrate with you.</p><button className="button-dark" onClick={() => setRsvpOpen(false)}>Close</button></div> : <><p className="eyebrow blue">Your reply</p><h2 className="modal-title">Are you <i>coming?</i></h2><form onSubmit={event => { event.preventDefault(); setSubmitted(true); }}><label>Your name<input required placeholder="Full name" /></label><fieldset><legend>Will you attend?</legend><label className="radio-label"><input type="radio" name="attendance" value="yes" required /> Joyfully accepts</label><label className="radio-label"><input type="radio" name="attendance" value="no" /> Regretfully declines</label></fieldset><label>Send your wishes <span className="optional">(optional)</span><textarea rows={4} placeholder="Share a message for the happy couple" /></label><button className="button-dark" type="submit">Send RSVP <ArrowRight size={16} /></button></form></>}</div></div>}
+      {rsvpOpen && <div className="modal-backdrop" onClick={() => setRsvpOpen(false)}><div className="rsvp-modal" onClick={event => event.stopPropagation()}><button className="modal-close" onClick={() => setRsvpOpen(false)} aria-label="Close RSVP"><X size={18} /></button>{submitted ? <div className="success-state"><div className="success-icon"><Check /></div><p className="eyebrow blue">Thank you</p><h2 className="display-heading">We’ll see you<br /><i>on the big day.</i></h2><p className="body-copy">Your response has been noted. We can’t wait to celebrate with you.</p><button className="button-dark" onClick={() => setRsvpOpen(false)}>Close</button></div> : <><p className="eyebrow blue">Reply Here</p><h2 className="modal-title">Are you <i>coming?</i></h2><form onSubmit={event => { event.preventDefault(); setSubmitted(true); }}><label>Your name<input required placeholder="Full name" /></label><fieldset><legend>Will you attend?</legend><label className="radio-label"><input type="radio" name="attendance" value="yes" required /> Joyfully accepts</label><label className="radio-label"><input type="radio" name="attendance" value="no" /> Regretfully declines</label></fieldset><label>Send your wishes <span className="optional">(optional)</span><textarea rows={4} placeholder="Share a message for the happy couple" /></label><button className="button-dark" type="submit">Send RSVP <ArrowRight size={16} /></button></form></>}</div></div>}
     </main>
   );
 }
