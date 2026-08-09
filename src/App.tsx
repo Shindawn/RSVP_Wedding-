@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CSSProperties } from 'react';
 import { ArrowDown, ArrowRight, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, X } from 'lucide-react';
 
@@ -38,6 +38,11 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [rsvpOpen, setRsvpOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [rsvpName, setRsvpName] = useState('');
+  const [rsvpAttendance, setRsvpAttendance] = useState<'yes' | 'no' | ''>('');
+  const [rsvpMessage, setRsvpMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [countdownPulse, setCountdownPulse] = useState(false);
@@ -103,6 +108,57 @@ function App() {
     setMenuOpen(false);
   };
 
+  const openRsvp = () => {
+    setRsvpOpen(true);
+    setSubmitted(false);
+    setRsvpName('');
+    setRsvpAttendance('');
+    setRsvpMessage('');
+    setSubmitError('');
+  };
+
+  const closeRsvp = () => setRsvpOpen(false);
+
+  const handleRsvpSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formspreeId = import.meta.env.VITE_FORMSPREE_FORM_ID;
+
+    if (!formspreeId) {
+      setSubmitError('RSVP is not configured yet. Please try again later.');
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: rsvpName,
+          attendance: rsvpAttendance === 'yes' ? 'Joyfully accepts' : 'Regretfully declines',
+          message: rsvpMessage.trim() || '(none)',
+          _subject: `RSVP: ${rsvpName}`,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null) as { error?: string } | null;
+        throw new Error(data?.error ?? 'Something went wrong. Please try again.');
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <main className="site-shell">
       <div className={`invitation-cover ${isOpen ? 'invitation-cover--open' : ''}`} aria-hidden={isOpen}>
@@ -117,7 +173,7 @@ function App() {
 
       <audio ref={audioRef} src="/audio/bg-music.mp3" preload="auto" loop />
 
-      <header className="topbar"><button className="brand-mark" onClick={() => scrollTo('home')} aria-label="Back to top"><img src="/images/cc-logo-white.png" alt="" /></button><nav className={menuOpen ? 'nav-links nav-links--visible' : 'nav-links'}><button onClick={() => scrollTo('story')}>Our story</button><button onClick={() => scrollTo('details')}>The details</button><button onClick={() => scrollTo('entourage')}>Entourage</button><button onClick={() => scrollTo('gallery')}>Gallery</button><button onClick={() => scrollTo('faqs')}>FAQs</button></nav><button className="rsvp-pill" onClick={() => setRsvpOpen(true)}>RSVP <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button></header>
+      <header className="topbar"><button className="brand-mark" onClick={() => scrollTo('home')} aria-label="Back to top"><img src="/images/cc-logo-white.png" alt="" /></button><nav className={menuOpen ? 'nav-links nav-links--visible' : 'nav-links'}><button onClick={() => scrollTo('story')}>Our story</button><button onClick={() => scrollTo('details')}>The details</button><button onClick={() => scrollTo('entourage')}>Entourage</button><button onClick={() => scrollTo('gallery')}>Gallery</button><button onClick={() => scrollTo('faqs')}>FAQs</button></nav><button className="rsvp-pill" onClick={openRsvp}>RSVP <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button></header>
 
       <section className={`hero ${isOpen ? 'hero--introduced' : ''}`} id="home"><div className="hero-image" style={{ backgroundImage: `url(${heroImage})` }} /><div className="hero-overlay" /><div className="hero-content"><p className="eyebrow hero-eyebrow">💙We’re getting married!</p><h2 className="hero-names" aria-label="Charlon and Chilzia"><span className="typed-name typed-name--first" aria-hidden="true">Charlon</span><span className="typed-join" aria-hidden="true">and</span><i className="typed-name typed-name--second" aria-hidden="true">Chilzia</i></h2><div className="hero-meta"><span>January 30, 2027</span><span className="meta-rule" /><span>Naga City, Camarines Sur</span></div><button className="text-link light" onClick={() => scrollTo('story')}>Kindly RSVP </button></div><div className="hero-vertical">CHARLON & CHILZIA <span>•</span> 2027</div></section>
 
@@ -126,6 +182,7 @@ function App() {
       <section className="details-section section-pad reveal-on-scroll" id="details">
         <div className="section-label light-label"><span>02</span><span className="label-line" /><span>THE DETAILS</span></div>
         <div className="details-heading">
+          <video className="flower-bloom flower-bloom--countdown-left" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
           <div className="details-heading-inner">
             <p className="eyebrow">Until I say "I do"</p>
             <div className={`countdown ${countdownPulse ? 'countdown--pulse' : ''}`}>
@@ -138,6 +195,7 @@ function App() {
              
             </div>
           </div>
+          <video className="flower-bloom flower-bloom--countdown-right" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
         </div>
 
         <div className="event-cards">
@@ -179,13 +237,83 @@ function App() {
 
       <section className="gallery-section section-pad reveal-on-scroll" id="gallery"><div className="section-label"><span>04</span><span className="label-line" /><span>GALLERY</span></div><div className="gallery-heading"><AnimatedHeading lines={[{ text: 'Moments we' }, { text: 'keep close.', italic: true }]} /><p className="body-copy">A few frames from the beginning of our forever.</p></div><div className="gallery-grid"><div className="gallery-carousel gallery-img-1" onMouseEnter={() => setPreviewPaused(true)} onMouseLeave={() => setPreviewPaused(false)} onFocus={() => setPreviewPaused(true)} onBlur={() => setPreviewPaused(false)}><img key={previewSlides[previewSlide]} className="gallery-img carousel-photo" src={previewSlides[previewSlide]} alt={`Wedding preview ${previewSlide + 1} of ${previewSlides.length}`} /><div className="carousel-dots" aria-label="Choose a preview photo">{previewSlides.map((image, index) => <button className={previewSlide === index ? 'carousel-dot carousel-dot--active' : 'carousel-dot'} onClick={() => setPreviewSlide(index)} aria-label={`Show preview photo ${index + 1}`} aria-current={previewSlide === index ? 'true' : undefined} key={image} />)}</div></div>{galleryImages.slice(1).map((image, index) => <img key={image} className={`gallery-img gallery-img-${index + 2}`} src={image} alt="Wedding moment" />)}</div></section>
 
-      <section className="rsvp-section section-pad reveal-on-scroll" id="rsvp"><video className="flower-bloom flower-bloom--rsvp" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" /><div className="rsvp-card"><div className="section-label light-label"><span>05</span><span className="label-line" /><span>RSVP</span></div><p className="eyebrow">We hope you can make it</p><h2 className="display-heading">Will you join us<br /><i>on our big day?</i></h2><p className="body-copy">Kindly reply by January 8, 2027. Your presence would mean the world to us.</p><button className="button-light" onClick={() => setRsvpOpen(true)}>Respond to invitation <ArrowRight size={16} /></button></div></section>
+      <section className="rsvp-section section-pad reveal-on-scroll" id="rsvp"><video className="flower-bloom flower-bloom--rsvp" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" /><div className="rsvp-card"><div className="section-label light-label"><span>05</span><span className="label-line" /><span>RSVP</span></div><p className="eyebrow">We hope you can make it</p><h2 className="display-heading">Will you join us<br /><i>on our big day?</i></h2><p className="body-copy">Kindly reply by January 8, 2027. Your presence would mean the world to us.</p><button className="button-light" onClick={openRsvp}>Respond to invitation <ArrowRight size={16} /></button></div></section>
 
       <section className="faq-section section-pad reveal-on-scroll" id="faqs"><div className="faq-intro"><p className="eyebrow blue">Good to know</p><AnimatedHeading lines={[{ text: 'Questions,' }, { text: 'answered.', italic: true }]} /><p className="body-copy">We’ve gathered a few helpful details so you can simply enjoy the day.</p></div><div className="faq-list">{['Can I bring a plus one?', 'What time should I arrive?', 'Is there parking available?', 'Will the event be indoors or outdoors?'].map((question, index) => <div className="faq-item" key={question}><button onClick={() => setActiveFaq(activeFaq === index ? null : index)}><span>{question}</span><ChevronDown className={activeFaq === index ? 'chevron-up' : ''} size={17} /></button>{activeFaq === index && <p>{index === 0 ? 'Please refer to your invitation for your guest details. We kindly ask that we celebrate with the guests named on each invitation.' : index === 1 ? 'Guest arrival begins at 12:30 in the afternoon. We recommend arriving a little early so you can settle in.' : index === 2 ? 'Yes, parking is available at both venues for wedding guests.' : 'The ceremony is indoors, followed by an indoor reception.'}</p>}</div>)}</div></section>
 
       <footer className="footer reveal-on-scroll" id="map"><img className="footer-logo" src="/images/cc-logo-white.png" alt="Charlon and Chilzia monogram" /><p className="eyebrow">See you on our big day</p><AnimatedHeading className="footer-names" lines={[{ text: 'Charlon & Chilzia' }]} /><p>30 · 01 · 2027 · Naga City, Philippines</p><div className="footer-bottom"><span>With love, always.</span><span>© 2027 C | C</span></div></footer>
 
-      {rsvpOpen && <div className="modal-backdrop" onClick={() => setRsvpOpen(false)}><div className="rsvp-modal" onClick={event => event.stopPropagation()}><button className="modal-close" onClick={() => setRsvpOpen(false)} aria-label="Close RSVP"><X size={18} /></button>{submitted ? <div className="success-state"><div className="success-icon"><Check /></div><p className="eyebrow blue">Thank you</p><h2 className="display-heading">We’ll see you<br /><i>on the big day.</i></h2><p className="body-copy">Your response has been noted. We can’t wait to celebrate with you.</p><button className="button-dark" onClick={() => setRsvpOpen(false)}>Close</button></div> : <><p className="eyebrow blue">Reply Here</p><h2 className="modal-title">Are you <i>coming?</i></h2><form onSubmit={event => { event.preventDefault(); setSubmitted(true); }}><label>Your name<input required placeholder="Full name" /></label><fieldset><legend>Will you attend?</legend><label className="radio-label"><input type="radio" name="attendance" value="yes" required /> Joyfully accepts</label><label className="radio-label"><input type="radio" name="attendance" value="no" /> Regretfully declines</label></fieldset><label>Send your wishes <span className="optional">(optional)</span><textarea rows={4} placeholder="Share a message for the happy couple" /></label><button className="button-dark" type="submit">Send RSVP <ArrowRight size={16} /></button></form></>}</div></div>}
+      {rsvpOpen && (
+        <div className="modal-backdrop" onClick={closeRsvp}>
+          <div className="rsvp-modal" onClick={event => event.stopPropagation()}>
+            <button className="modal-close" onClick={closeRsvp} aria-label="Close RSVP"><X size={18} /></button>
+            {submitted ? (
+              <div className="success-state">
+                <div className="success-icon"><Check /></div>
+                <p className="eyebrow blue">Thank you</p>
+                <h2 className="display-heading">We’ll see you<br /><i>on the big day.</i></h2>
+                <p className="body-copy">Your response has been noted. We can’t wait to celebrate with you.</p>
+                <button className="button-dark" onClick={closeRsvp}>Close</button>
+              </div>
+            ) : (
+              <>
+                <p className="eyebrow blue">Reply Here</p>
+                <h2 className="modal-title">Are you <i>coming?</i></h2>
+                <form onSubmit={handleRsvpSubmit}>
+                  <label>
+                    Your name
+                    <input
+                      name="name"
+                      required
+                      placeholder="Full name"
+                      value={rsvpName}
+                      onChange={event => setRsvpName(event.target.value)}
+                    />
+                  </label>
+                  <fieldset>
+                    <legend>Will you attend?</legend>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="attendance"
+                        value="yes"
+                        required
+                        checked={rsvpAttendance === 'yes'}
+                        onChange={() => setRsvpAttendance('yes')}
+                      />
+                      Joyfully accepts
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="attendance"
+                        value="no"
+                        checked={rsvpAttendance === 'no'}
+                        onChange={() => setRsvpAttendance('no')}
+                      />
+                      Regretfully declines
+                    </label>
+                  </fieldset>
+                  <label>
+                    Send your wishes <span className="optional">(optional)</span>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      placeholder="Share a message for the happy couple"
+                      value={rsvpMessage}
+                      onChange={event => setRsvpMessage(event.target.value)}
+                    />
+                  </label>
+                  {submitError && <p className="form-error" role="alert">{submitError}</p>}
+                  <button className="button-dark" type="submit" disabled={submitting}>
+                    {submitting ? 'Sending…' : 'Send RSVP'} <ArrowRight size={16} />
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }
