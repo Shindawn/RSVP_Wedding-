@@ -205,7 +205,7 @@ function App() {
             <div className="event-icon"><Flower2 size={22} /></div>
             <p className="eyebrow">The ceremony</p>
             <h3>Archbishop<br />Palace Chapel</h3>
-            <p className="event-info"><Clock3 size={15} /> 1:30 in the afternoo</p>
+            <p className="event-info"><Clock3 size={15} /> 1:30PM</p>
             <p className="event-info"><MapPin size={15} /> Naga City, Camarines Sur</p>
             <a className="text-link" href="https://maps.app.goo.gl/CM897Wko3joafugn6" target="_blank" rel="noopener noreferrer" aria-label="Open ceremony location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
           </article>
