@@ -182,7 +182,7 @@ function App() {
       <section className="intro-section section-pad reveal-on-scroll" id="story"><video className="flower-bloom flower-bloom--story" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" /><div className="section-label"><span>01</span><span className="label-line" /><span>OUR STORY</span></div><div className="story-grid"><div><p className="eyebrow blue">Bible Verse</p><h2 className="display-heading">The best things<br /><i>happen unexpectedly.</i></h2><p className="body-copy">Somehow, in the middle of ordinary days, we found something extraordinary. What started as a quiet hello became a life we never want to stop choosing.</p><p className="body-copy">We’re so grateful to be surrounded by the people who have shaped our story. Please join us as we begin our next chapter together.</p><div className="signature"><img src="/images/cc-logo-blue.png" alt="Charlon and Chilzia monogram" /></div></div><div className="story-image-wrap"><img src={detailImage} alt="A newlywed couple by the water" /><span className="image-caption">where our forever begins</span></div></div></section>
 
       <section className="details-section section-pad reveal-on-scroll" id="details">
-        <div className="section-label"><span>02</span><span className="label-line" /><span>THE DETAILS</span></div>
+        <div className="section-label details-label"><span>02</span><span className="label-line" /><span>THE DETAILS</span></div>
         <div className="details-heading">
           <video className="flower-bloom flower-bloom--countdown-left" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
           <div className="details-heading-inner">
