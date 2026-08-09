@@ -95,7 +95,7 @@ button { cursor: pointer; }
 .signature img { display: block; width: 100%; height: auto; }
 
 .details-section { background: #D9F0F7; color: var(--ink); }
-.details-heading { display: flex; justify-content: center; align-items: flex-start; margin-top: 80px; margin-bottom: 55px; padding: 56px 0; position: relative; isolation: isolate; }
+.details-heading { display: flex; justify-content: center; align-items: flex-start; margin-top: 80px; margin-bottom: 55px; padding: 56px 0; background: #D9F0F7; position: relative; isolation: isolate; }
 .details-heading > :not(.flower-bloom) { position: relative; z-index: 1; }
 .details-heading-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; max-width: 1200px; padding: 0 60px; border-radius: 12px; }
 .details-heading .eyebrow { color: #315d6b; }
@@ -179,8 +179,8 @@ button { cursor: pointer; }
 .rsvp-section { position: relative; isolation: isolate; overflow: hidden; background: #c8dce4; padding: 95px max(7vw, 40px); }
 .rsvp-card { position: relative; z-index: 1; max-width: 1200px; margin: auto; padding: 78px 9vw; background: var(--navy); color: white; box-shadow: 0 22px 35px rgba(20,43,67,.15); }
 .flower-bloom { position: absolute; z-index: 0; width: clamp(420px, 48vw, 760px); max-height: 86%; height: auto; border: 0; object-fit: contain; pointer-events: none; mix-blend-mode: screen; opacity: .8; filter: saturate(.82); }
-.flower-bloom--countdown-left { left: -60px; top: 50%; transform: translateY(-50%); width: 300px; max-height: 100%; opacity: .6; }
-.flower-bloom--countdown-right { right: -60px; top: 50%; transform: translateY(-50%); width: 300px; max-height: 100%; opacity: .6; }
+.flower-bloom--countdown-left { left: 40px; top: 50%; transform: translateY(-50%); width: 260px; max-height: 100%; opacity: .6; }
+.flower-bloom--countdown-right { right: 40px; top: 50%; transform: translateY(-50%); width: 260px; max-height: 100%; opacity: .6; }
 .flower-bloom--story { left: -2%; bottom: 0; }
 .flower-bloom--rsvp { z-index: 2; right: -2%; bottom: 0; width: clamp(380px, 42vw, 680px); opacity: .72; }
 .rsvp-card .display-heading { margin-top: 48px; color: #315d6b; }
