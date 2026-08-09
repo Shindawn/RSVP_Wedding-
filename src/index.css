@@ -120,7 +120,7 @@ button { cursor: pointer; }
 .event-card h3 { margin: 0; font: 400 40px/.95 Georgia, serif; letter-spacing: -.06em; color: var(--ink); }
 .event-info { display: flex; align-items: center; gap: 9px; margin: 18px 0 0; color: #71808b; font-size: 12px; }
 .event-card .text-link { color: var(--ink); }
-.timeline-heading { display: flex; align-items: center; justify-content: center; gap: 11px; max-width: 1200px; margin: 56px auto 0; color: #8291a0; font: 700 11px/1 Arial, sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+.timeline-heading { display: flex; align-items: center; justify-content: center; gap: 11px; max-width: 1200px; margin: 56px auto 0; color: #315d6b; font: 700 11px/1 Arial, sans-serif; letter-spacing: .22em; text-transform: uppercase; }
 .timeline-heading svg { color: #6587a9; }
 .timeline { display: flex; align-items: flex-start; max-width: 1200px; margin: 30px auto 0; }
 .timeline > div { display: flex; flex-direction: column; align-items: center; gap: 9px; min-width: max-content; text-align: center; }
