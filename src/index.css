@@ -97,6 +97,8 @@ button { cursor: pointer; }
 .details-heading { display: flex; justify-content: center; align-items: flex-start; width: 100vw; margin-left: calc(-50vw + 50%); margin-top: 80px; margin-bottom: 55px; padding: 56px 0; background: #D9F0F7; color: #315D6B; position: relative; isolation: isolate; }
 .details-heading > :not(.flower-bloom) { position: relative; z-index: 1; }
 .details-heading-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; max-width: 1200px; padding: 0 60px; border-radius: 12px; }
+.details-heading .eyebrow { color: #315d6b; }
+.details-heading .countdown .time-label { color: #315d6b; opacity: .65; }
 .sliding-heading { overflow: hidden; }
 .sliding-heading span, .sliding-heading i { display: block; opacity: 0; transform: translateX(-70px); }
 .is-visible .sliding-heading span { animation: heading-slide .8s cubic-bezier(.22,1,.36,1) .2s forwards; }
