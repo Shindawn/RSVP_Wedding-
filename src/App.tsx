@@ -192,7 +192,7 @@ function App() {
                 <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.days} days`}>{String(timeLeft.days).padStart(2, '0')}</div><div className="time-label">Days</div></div>
                 <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.hours} hours`}>{String(timeLeft.hours).padStart(2, '0')}</div><div className="time-label">Hours</div></div>
                 <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.minutes} minutes`}>{String(timeLeft.minutes).padStart(2, '0')}</div><div className="time-label">Minutes</div></div>
-                <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.seconds} seconds`}>{String(timeLeft.seconds).padStart(2, '0')}</div><div className="time-label">Seconds</div></div>
+                <div className="time-segment time-segment--seconds"><div className="time-value" aria-label={`${timeLeft.seconds} seconds`}>{String(timeLeft.seconds).padStart(2, '0')}</div><div className="time-label">Seconds</div></div>
               </div>
              
             </div>

@@ -109,7 +109,7 @@ button { cursor: pointer; }
 .countdown .time-segment { display: flex; flex-direction: column; align-items: center; }
 .countdown .time-value { font: 65px Georgia, serif; color: var(--ink); line-height: 1; }
 .countdown .time-label { font: italic 12px Georgia, serif; color: rgba(255,255,255,.75); margin-top: 6px; letter-spacing: .18em; text-transform: uppercase; }
-.countdown--pulse .time-value { animation: count-pulse .6s ease-out; }
+.countdown--pulse .time-segment--seconds .time-value { animation: count-pulse .6s ease-out; }
 .event-cards { display: grid; grid-template-columns: repeat(2, 1fr); max-width: 1200px; margin: auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .event-card { padding: 45px 5vw 52px 0; }
 .event-card + .event-card { border-left: 1px solid var(--line); padding-left: 5vw; }
