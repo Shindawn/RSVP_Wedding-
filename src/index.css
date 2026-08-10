@@ -193,7 +193,7 @@ button { cursor: pointer; }
 .button-light, .button-dark { display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; border: 1px solid transparent; padding: 15px 20px; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; transition: all .2s; }.button-light { background: white; color: var(--ink); }.button-light:hover { background: #cce0e8; }.button-dark { background: var(--navy); color: white; }.button-dark:hover { background: #284c6a; }
 
 .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10vw; background: var(--paper); }.faq-list { padding-top: 9px; }.faq-item { border-top: 1px solid var(--line); }.faq-item:last-child { border-bottom: 1px solid var(--line); }.faq-item button { display: flex; justify-content: space-between; width: 100%; border: 0; padding: 23px 0; background: none; color: var(--ink); text-align: left; font: 17px Georgia, serif; }.faq-item button svg { transition: transform .25s; }.faq-item .chevron-up { transform: rotate(180deg); }.faq-item p { max-width: 500px; margin: -5px 30px 22px 0; color: #71808b; font-size: 13px; line-height: 1.6; }
-.footer { padding: 115px 7vw 30px; background: var(--navy); color: white; text-align: center; }.footer-logo { display: block; width: clamp(120px, 15vw, 190px); height: auto; margin: -35px auto 35px; object-fit: contain; }.footer h2 { margin: 0; font: 400 clamp(50px, 8vw, 100px) Georgia, serif; letter-spacing: -.08em; }.footer > p:not(.eyebrow) { margin-top: 22px; color: white; font: italic 14px Georgia, serif; }.footer-bottom { display: flex; justify-content: space-between; margin-top: 110px; padding-top: 19px; border-top: 1px solid rgba(255,255,255,.2); color: #9db3c0; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.footer { padding: 115px 7vw 30px; background: var(--navy); color: white; text-align: center; }.footer-logo { display: block; width: clamp(120px, 15vw, 190px); height: auto; margin: -35px auto 35px; object-fit: contain; }.footer h2 { margin: 0; font: 400 clamp(50px, 8vw, 100px) Georgia, serif; letter-spacing: -.08em; }.footer > p:not(.eyebrow) { margin-top: 22px; color: #315D6B; font: italic 14px Georgia, serif; }.footer-bottom { display: flex; justify-content: space-between; margin-top: 110px; padding-top: 19px; border-top: 1px solid rgba(255,255,255,.2); color: #9db3c0; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
 .footer .eyebrow { color: #315d6b; }
 .footer .footer-names { color: #315d6b; }
 
@@ -223,4 +223,12 @@ button { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .invitation-card, .invitation-cover--open .invitation-card { animation: none; } .invitation-cover { transition-duration: .35s; } .hero--introduced .typed-name { width: auto; opacity: 1; animation: none; } .hero--introduced .typed-join, .hero--introduced .hero-eyebrow, .hero--introduced .hero-meta, .hero--introduced .hero-content > .text-link, .is-visible .sliding-heading span, .is-visible .sliding-heading i, .is-visible .letter-char, .details-section.is-visible .countdown-digit, .gallery-carousel .carousel-photo { opacity: 1; transform: none; animation: none; } .details-section.is-visible .timeline > i:after { animation: none; } .flower-bloom { display: none; } }
 @media (max-width: 760px) {
   .brand-mark { margin-left: -14px; }
+}
+@media (max-width: 760px) {
+  .display-heading { font-size: clamp(30px, 9vw, 44px); }
+  .center-heading { padding: 0 12px; }
+  .center-heading .display-heading,
+  .rsvp-card .display-heading { max-width: 300px; margin-left: auto; margin-right: auto; }
+  .footer .footer-names { text-align: center; }
+  .footer .footer-names .letter-line { width: 100%; text-align: center; }
 }
