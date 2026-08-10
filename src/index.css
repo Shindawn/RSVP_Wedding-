@@ -221,3 +221,6 @@ button { cursor: pointer; }
 @media (max-width: 760px) { .flower-bloom { max-height: 70%; } .flower-bloom--story { left: -55px; bottom: 0; width: 390px; opacity: .52; } .flower-bloom--rsvp { right: -55px; bottom: 0; width: 380px; opacity: .52; } }
 @media (max-height: 720px) { .invitation-cover { gap: 12px; padding: 14px; } .cover-logo { margin-bottom: 8px; } .cover-intro { margin-bottom: 7px; } .cover-date { margin-top: 9px; } .invitation-card { width: min(560px, 72vw, 108vh); } }
 @media (prefers-reduced-motion: reduce) { .invitation-card, .invitation-cover--open .invitation-card { animation: none; } .invitation-cover { transition-duration: .35s; } .hero--introduced .typed-name { width: auto; opacity: 1; animation: none; } .hero--introduced .typed-join, .hero--introduced .hero-eyebrow, .hero--introduced .hero-meta, .hero--introduced .hero-content > .text-link, .is-visible .sliding-heading span, .is-visible .sliding-heading i, .is-visible .letter-char, .details-section.is-visible .countdown-digit, .gallery-carousel .carousel-photo { opacity: 1; transform: none; animation: none; } .details-section.is-visible .timeline > i:after { animation: none; } .flower-bloom { display: none; } }
+@media (max-width: 760px) {
+  .brand-mark { margin-left: -14px; }
+}
