@@ -119,7 +119,7 @@ button { cursor: pointer; }
 .event-icon { display: grid; place-items: center; width: 46px; height: 46px; margin: 0 0 25px; border: 1px solid var(--line); border-radius: 50%; color: #6587a9; }
 .event-card .eyebrow { margin-bottom: 15px; color: #8291a0; }
 .event-info { justify-content: center; }
-.event-card h3 { margin: 0; font: 400 40px/.95 Georgia, serif; letter-spacing: -.06em; color: var(--ink); }
+.event-card h3 { margin: 0; font: 400 40px/.95 Georgia, serif; letter-spacing: -.06em; color: #486F88; }
 .event-info { display: flex; align-items: center; gap: 9px; margin: 18px 0 0; color: #71808b; font-size: 12px; }
 .event-info + .event-info { margin-top: 6px; }
 .event-card .text-link { color: var(--ink); }
