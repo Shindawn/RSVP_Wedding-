@@ -108,10 +108,10 @@ button { cursor: pointer; }
 .is-visible .sliding-heading i { animation: heading-slide .8s cubic-bezier(.22,1,.36,1) .42s forwards; }
 .countdown { display: flex; flex-direction: column; align-items: center; gap: 12px; color: rgba(255,255,255,.8); text-align: center; }
 .countdown .big { color: var(--ink); font: 65px Georgia, serif; letter-spacing: -.03em; display: block; }
-.countdown .time-row { display: flex; gap: 20px; align-items: baseline; justify-content: center; }
+.countdown .time-row { display: flex; gap: clamp(8px, 4vw, 20px); align-items: baseline; justify-content: center; flex-wrap: wrap; }
 .countdown .time-segment { display: flex; flex-direction: column; align-items: center; }
-.countdown .time-value { font: 65px Georgia, serif; color: var(--ink); line-height: 1; }
-.countdown .time-label { font: italic 12px Georgia, serif; color: rgba(255,255,255,.75); margin-top: 6px; letter-spacing: .18em; text-transform: uppercase; }
+.countdown .time-value { font: clamp(30px, 9vw, 65px)/1 Georgia, serif; color: var(--ink); }
+.countdown .time-label { font: italic clamp(9px, 2.2vw, 12px) Georgia, serif; color: rgba(255,255,255,.75); margin-top: 6px; letter-spacing: .14em; text-transform: uppercase; }
 .countdown--pulse .time-segment--seconds .time-value { animation: count-pulse .6s ease-out; }
 .event-cards { display: grid; grid-template-columns: repeat(2, 1fr); max-width: 1200px; margin: auto; border-top: 1px solid #315d6b; border-bottom: 1px solid #315d6b; }
 .event-card { padding: 45px 5vw 52px 5vw; text-align: center; display: flex; flex-direction: column; align-items: center; }
