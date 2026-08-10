@@ -278,7 +278,7 @@ function App() {
         <div className="details-heading">
           <video className="flower-bloom flower-bloom--countdown-left" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
           <div className="details-heading-inner">
-            <p className="eyebrow">Until I say "I do"</p>
+            <p className="eyebrow">Days until we say "I do"</p>
             <div className={`countdown ${countdownPulse ? 'countdown--pulse' : ''}`}>
               <div className="time-row">
                 <div className="time-segment"><div className="time-value" aria-label={`${timeLeft.days} days`}>{String(timeLeft.days).padStart(2, '0')}</div><div className="time-label">Days</div></div>
