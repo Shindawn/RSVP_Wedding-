@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CSSProperties } from 'react';
-import { ArrowDown, ArrowRight, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const heroImage = 'https://images.pexels.com/photos/15984448/pexels-photo-15984448.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
 const heroBgImage = '/images/aicc.png';
@@ -14,6 +14,11 @@ const previewSlides = [
   'https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&h=1000&w=1500',
   'https://images.pexels.com/photos/1043902/pexels-photo-1043902.jpeg?auto=compress&cs=tinysrgb&h=1000&w=1500',
   'https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&h=1000&w=1500',
+
+];
+const allGalleryImages = [
+  ...previewSlides,
+  ...galleryImages.slice(1),
 ];
 
 const entourageGroups = [
@@ -52,10 +57,36 @@ function App() {
   const [previewSlide, setPreviewSlide] = useState(0);
   const [previewPaused, setPreviewPaused] = useState(false);
   const [storyLocationShown, setStoryLocationShown] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement | null>(null);
   const logoCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const openLightbox = (index: number) => {
+  setLightboxIndex(index);
+};
+
+const closeLightbox = () => {
+  setLightboxIndex(null);
+};
+
+const nextLightboxImage = () => {
+  setLightboxIndex(current =>
+    current === null
+      ? null
+      : (current + 1) % allGalleryImages.length
+  );
+};
+
+const previousLightboxImage = () => {
+  setLightboxIndex(current =>
+    current === null
+      ? null
+      : (current - 1 + allGalleryImages.length) %
+        allGalleryImages.length
+  );
+};
 
   useEffect(() => {
   const video = logoVideoRef.current;
@@ -145,6 +176,32 @@ function App() {
     video.removeEventListener('loadeddata', start);
   };
 }, []);
+
+useEffect(() => {
+  if (lightboxIndex === null) return;
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      closeLightbox();
+    }
+
+    if (event.key === 'ArrowRight') {
+      nextLightboxImage();
+    }
+
+    if (event.key === 'ArrowLeft') {
+      previousLightboxImage();
+    }
+  };
+
+  window.addEventListener('keydown', handleKeyDown);
+  document.body.style.overflow = 'hidden';
+
+  return () => {
+    window.removeEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = '';
+  };
+}, [lightboxIndex]);
 
   useEffect(() => {
     const weddingDate = new Date('2027-01-30T13:30:00+08:00').getTime();
@@ -329,8 +386,102 @@ function App() {
 
       <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="center-heading"><p className="eyebrow blue">With our favorite people</p><AnimatedHeading lines={[{ text: 'The ones who make' }, { text: 'our story complete.', italic: true }]} /></div><div className="people-grid"><div><p className="eyebrow blue">Matron of honor</p><h3>Liza Mendoza</h3><p className="muted">The calm in every storm<br />and our forever friend.</p></div><div><p className="eyebrow blue">Maid of honor</p><h3>Angelica Santos</h3><p className="muted">A little bit of sunshine<br />in human form.</p></div><div><p className="eyebrow blue">Best man</p><h3>Joshua Garcia</h3><p className="muted">Brother by choice,<br />family by heart.</p></div></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className="entourage-group" key={group.title}><p className="eyebrow blue">{group.title}</p>{group.names.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
 
-      <section className="gallery-section section-pad reveal-on-scroll" id="gallery"><div className="section-label"><span>04</span><span className="label-line" /><span>GALLERY</span></div><div className="gallery-heading"><AnimatedHeading lines={[{ text: 'Moments we' }, { text: 'keep close.', italic: true }]} /><p className="body-copy">A few frames from the beginning of our forever.</p></div><div className="gallery-grid"><div className="gallery-carousel gallery-img-1" onMouseEnter={() => setPreviewPaused(true)} onMouseLeave={() => setPreviewPaused(false)} onFocus={() => setPreviewPaused(true)} onBlur={() => setPreviewPaused(false)}><img key={previewSlides[previewSlide]} className="gallery-img carousel-photo" src={previewSlides[previewSlide]} alt={`Wedding preview ${previewSlide + 1} of ${previewSlides.length}`} /><div className="carousel-dots" aria-label="Choose a preview photo">{previewSlides.map((image, index) => <button className={previewSlide === index ? 'carousel-dot carousel-dot--active' : 'carousel-dot'} onClick={() => setPreviewSlide(index)} aria-label={`Show preview photo ${index + 1}`} aria-current={previewSlide === index ? 'true' : undefined} key={image} />)}</div></div>{galleryImages.slice(1).map((image, index) => <img key={image} className={`gallery-img gallery-img-${index + 2}`} src={image} alt="Wedding moment" />)}</div></section>
+      <section
+  className="gallery-section section-pad reveal-on-scroll"
+  id="gallery"
+>
+  <div className="section-label">
+    <span>04</span>
+    <span className="label-line" />
+    <span>GALLERY</span>
+  </div>
 
+  <div className="gallery-heading">
+    <AnimatedHeading
+      lines={[
+        { text: 'Moments we' },
+        { text: 'keep close.', italic: true }
+      ]}
+    />
+
+    <p className="body-copy">
+      A few frames from the beginning of our forever.
+    </p>
+  </div>
+
+  <div className="gallery-grid">
+
+    {/* Main carousel image */}
+    <div
+      className="gallery-carousel gallery-img-1"
+      onMouseEnter={() => setPreviewPaused(true)}
+      onMouseLeave={() => setPreviewPaused(false)}
+      onFocus={() => setPreviewPaused(true)}
+      onBlur={() => setPreviewPaused(false)}
+    >
+      <button
+        type="button"
+        className="gallery-image-button gallery-carousel-button"
+        onClick={() => openLightbox(previewSlide)}
+        aria-label={`View wedding photo ${previewSlide + 1}`}
+      >
+        <img
+          key={previewSlides[previewSlide]}
+          className="gallery-img carousel-photo"
+          src={previewSlides[previewSlide]}
+          alt={`Wedding preview ${previewSlide + 1} of ${previewSlides.length}`}
+        />
+      </button>
+
+      <div
+        className="carousel-dots"
+        aria-label="Choose a preview photo"
+      >
+        {previewSlides.map((image, index) => (
+          <button
+            className={
+              previewSlide === index
+                ? 'carousel-dot carousel-dot--active'
+                : 'carousel-dot'
+            }
+            onClick={event => {
+              event.stopPropagation();
+              setPreviewSlide(index);
+            }}
+            aria-label={`Show preview photo ${index + 1}`}
+            aria-current={
+              previewSlide === index ? 'true' : undefined
+            }
+            key={image}
+          />
+        ))}
+      </div>
+    </div>
+
+    {/* Remaining images */}
+    {galleryImages.slice(1).map((image, index) => (
+      <button
+        type="button"
+        className={`gallery-image-button gallery-img-${index + 2}`}
+        onClick={() =>
+          openLightbox(previewSlides.length + index)
+        }
+        key={image}
+        aria-label={`View wedding photo ${
+          previewSlides.length + index + 1
+        }`}
+      >
+        <img
+          className="gallery-img"
+          src={image}
+          alt={`Wedding moment ${
+            previewSlides.length + index + 1
+          }`}
+        />
+      </button>
+    ))}
+  </div>
+</section>
       <section className="rsvp-section section-pad reveal-on-scroll" id="rsvp"><video className="flower-bloom flower-bloom--rsvp" src="/images/blooming-flowers.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" /><div className="rsvp-card"><div className="section-label light-label"><span>05</span><span className="label-line" /><span>RSVP</span></div><p className="eyebrow">We hope you can make it</p><h2 className="display-heading">Will you join us<br /><i>on our big day?</i></h2><p className="body-copy">Kindly reply by January 8, 2027. Your presence would mean the world to us.</p><button className="button-light" onClick={openRsvp}>Respond to invitation <ArrowRight size={16} /></button></div></section>
 
       <section className="faq-section section-pad reveal-on-scroll" id="faqs"><div className="faq-intro"><p className="eyebrow blue">Good to know</p><AnimatedHeading lines={[{ text: 'Questions,' }, { text: 'answered.', italic: true }]} /><p className="body-copy">We’ve gathered a few helpful details so you can simply enjoy the day.</p></div><div className="faq-list">{['Can I bring a plus one?', 'What time should I arrive?', 'Is there parking available?', 'Will the event be indoors or outdoors?'].map((question, index) => <div className="faq-item" key={question}><button onClick={() => setActiveFaq(activeFaq === index ? null : index)}><span>{question}</span><ChevronDown className={activeFaq === index ? 'chevron-up' : ''} size={17} /></button>{activeFaq === index && <p>{index === 0 ? 'Please refer to your invitation for your guest details. We kindly ask that we celebrate with the guests named on each invitation.' : index === 1 ? 'Guest arrival begins at 12:30 in the afternoon. We recommend arriving a little early so you can settle in.' : index === 2 ? 'Yes, parking is available at both venues for wedding guests.' : 'The ceremony is indoors, followed by an indoor reception.'}</p>}</div>)}</div></section>
@@ -374,6 +525,73 @@ function App() {
   </div>
 
 </footer>
+
+{lightboxIndex !== null && (
+  <div
+    className="gallery-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Wedding photo gallery"
+    onClick={closeLightbox}
+  >
+    <button
+      type="button"
+      className="lightbox-close"
+      onClick={closeLightbox}
+      aria-label="Close gallery"
+    >
+      <X size={24} />
+    </button>
+
+    <button
+      type="button"
+      className="lightbox-arrow lightbox-arrow--left"
+      onClick={event => {
+        event.stopPropagation();
+        previousLightboxImage();
+      }}
+      aria-label="Previous image"
+    >
+      <ChevronLeft size={30} />
+    </button>
+
+    <div
+      className="lightbox-content"
+      onClick={event => event.stopPropagation()}
+    >
+      <img
+        key={allGalleryImages[lightboxIndex]}
+        src={allGalleryImages[lightboxIndex]}
+        alt={`Wedding photo ${lightboxIndex + 1}`}
+        className="lightbox-image"
+      />
+
+      <div className="lightbox-info">
+        <span>
+          {String(lightboxIndex + 1).padStart(2, '0')}
+        </span>
+
+        <span className="lightbox-line" />
+
+        <span>
+          {String(allGalleryImages.length).padStart(2, '0')}
+        </span>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      className="lightbox-arrow lightbox-arrow--right"
+      onClick={event => {
+        event.stopPropagation();
+        nextLightboxImage();
+      }}
+      aria-label="Next image"
+    >
+      <ChevronRight size={30} />
+    </button>
+  </div>
+)}
 
       {rsvpOpen && (
         <div className="modal-backdrop" onClick={closeRsvp}>
