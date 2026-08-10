@@ -54,6 +54,97 @@ function App() {
   const [storyLocationShown, setStoryLocationShown] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const logoVideoRef = useRef<HTMLVideoElement | null>(null);
+  const logoCanvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+  const video = logoVideoRef.current;
+  const canvas = logoCanvasRef.current;
+
+  if (!video || !canvas) return;
+
+  const ctx = canvas.getContext('2d', {
+    willReadFrequently: true,
+  });
+
+  if (!ctx) return;
+
+  let animationFrame: number;
+
+  const renderFrame = () => {
+    if (
+      video.readyState >= 2 &&
+      video.videoWidth > 0 &&
+      video.videoHeight > 0
+    ) {
+      if (
+        canvas.width !== video.videoWidth ||
+        canvas.height !== video.videoHeight
+      ) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+      }
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const frame = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const data = frame.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        // Green-screen detection
+        const greenDominance = g - Math.max(r, b);
+
+        if (g > 80 && greenDominance > 35) {
+          // Soft edge instead of harsh removal
+          const alpha = Math.max(
+            0,
+            Math.min(255, 255 - greenDominance * 4)
+          );
+
+          data[i + 3] = alpha;
+
+          // Reduce leftover green around edges
+          if (alpha > 0) {
+            data[i + 1] = Math.min(
+              g,
+              (r + b) / 2
+            );
+          }
+        }
+      }
+
+      ctx.putImageData(frame, 0, 0);
+    }
+
+    animationFrame = requestAnimationFrame(renderFrame);
+  };
+
+  const start = () => {
+    video.play().catch(() => {});
+    renderFrame();
+  };
+
+  video.addEventListener('loadeddata', start);
+
+  if (video.readyState >= 2) {
+    start();
+  }
+
+  return () => {
+    cancelAnimationFrame(animationFrame);
+    video.removeEventListener('loadeddata', start);
+  };
+}, []);
 
   useEffect(() => {
     const weddingDate = new Date('2027-01-30T13:30:00+08:00').getTime();
@@ -244,7 +335,45 @@ function App() {
 
       <section className="faq-section section-pad reveal-on-scroll" id="faqs"><div className="faq-intro"><p className="eyebrow blue">Good to know</p><AnimatedHeading lines={[{ text: 'Questions,' }, { text: 'answered.', italic: true }]} /><p className="body-copy">We’ve gathered a few helpful details so you can simply enjoy the day.</p></div><div className="faq-list">{['Can I bring a plus one?', 'What time should I arrive?', 'Is there parking available?', 'Will the event be indoors or outdoors?'].map((question, index) => <div className="faq-item" key={question}><button onClick={() => setActiveFaq(activeFaq === index ? null : index)}><span>{question}</span><ChevronDown className={activeFaq === index ? 'chevron-up' : ''} size={17} /></button>{activeFaq === index && <p>{index === 0 ? 'Please refer to your invitation for your guest details. We kindly ask that we celebrate with the guests named on each invitation.' : index === 1 ? 'Guest arrival begins at 12:30 in the afternoon. We recommend arriving a little early so you can settle in.' : index === 2 ? 'Yes, parking is available at both venues for wedding guests.' : 'The ceremony is indoors, followed by an indoor reception.'}</p>}</div>)}</div></section>
 
-      <footer className="footer reveal-on-scroll" id="map"><video className="footer-logo" src="/images/logo.mp4" autoPlay muted loop playsInline preload="metadata" aria-label="Charlon and Chilzia monogram" /><p className="eyebrow">See you on our big day</p><AnimatedHeading className="footer-names" lines={[{ text: 'Charlon & Chilzia' }]} /><p>30 · 01 · 2027 · Naga City, Philippines</p><div className="footer-bottom"><span>With love, always.</span><span>© 2027 C | C</span></div></footer>
+      <footer className="footer reveal-on-scroll" id="map">
+
+  <div className="footer-logo-wrap">
+    {/* Hidden original green-screen MP4 */}
+    <video
+      ref={logoVideoRef}
+      src="/images/logo.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      className="footer-logo-source"
+      aria-hidden="true"
+    />
+
+    {/* Visible output with green removed */}
+    <canvas
+      ref={logoCanvasRef}
+      className="footer-logo"
+      aria-label="Charlon and Chilzia monogram"
+    />
+  </div>
+
+  <p className="eyebrow">See you on our big day</p>
+
+  <AnimatedHeading
+    className="footer-names"
+    lines={[{ text: 'Charlon & Chilzia' }]}
+  />
+
+  <p>30 · 01 · 2027 · Naga City, Philippines</p>
+
+  <div className="footer-bottom">
+    <span>With love, always.</span>
+    <span>© 2027 C | C</span>
+  </div>
+
+</footer>
 
       {rsvpOpen && (
         <div className="modal-backdrop" onClick={closeRsvp}>
@@ -320,5 +449,6 @@ function App() {
     </main>
   );
 }
+
 
 export default App;
