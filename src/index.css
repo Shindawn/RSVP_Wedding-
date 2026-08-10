@@ -214,30 +214,256 @@ button { cursor: pointer; }
 .reveal-on-scroll.is-visible .story-grid > *:nth-child(2), .reveal-on-scroll.is-visible .gallery-grid > *:nth-child(2), .reveal-on-scroll.is-visible .event-card:nth-child(2), .reveal-on-scroll.is-visible .people-grid > *:nth-child(2), .reveal-on-scroll.is-visible .people-grid > *:nth-child(3) { transition-delay: .15s; }
 .reveal-on-scroll.is-visible .gallery-grid > *:nth-child(3), .reveal-on-scroll.is-visible .gallery-grid > *:nth-child(4) { transition-delay: .3s; }
 
-@media (max-width: 760px) { .section-pad { padding: 75px 24px; }.topbar { padding: 20px 24px; }.nav-links { position: absolute; top: 70px; left: 16px; right: 16px; display: none; flex-direction: column; gap: 0; margin: 0; padding: 14px 22px; background: rgba(12,35,55,.94); }.nav-links--visible { display: flex; }.nav-links button { padding: 13px 0; text-align: left; }.menu-button { display: block; color: white; padding: 5px; }.rsvp-pill { margin-left: auto; margin-right: 10px; }.brand-mark { padding-right: 12px; }.hero { min-height: 780px; padding: 40px 24px 85px; }.hero h2 { font-size: clamp(57px, 15vw, 100px); }.hero-meta { align-items: flex-start; flex-direction: column; gap: 8px; }.meta-rule { display: none; }.hero-vertical { display: none; }.story-grid, .dress-section, .faq-section { grid-template-columns: 1fr; gap: 55px; }.story-grid { margin-top: 55px; }.story-image-wrap img { height: 430px; }.details-heading { align-items: flex-start; flex-direction: column; gap: 32px; margin-top: 55px; }.event-cards { grid-template-columns: 1fr; }.event-card, .event-card + .event-card { padding: 34px 0; }.event-card + .event-card { border-top: 1px solid rgba(255,255,255,.2); border-left: 0; }.event-card h3 { font-size: 34px; }.timeline { overflow-x: auto; padding-bottom: 12px; }.timeline > i { min-width: 22px; }.people-grid { grid-template-columns: 1fr; }.people-grid > div + div { border-top: 1px solid var(--line); border-left: 0; }.dress-section { padding-top: 0; }.dress-content { padding: 75px 24px 0; }.dress-image { min-height: 430px; }.gallery-heading { align-items: flex-start; flex-direction: column; gap: 25px; margin-top: 55px; }.gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 170px 170px; }.gallery-img-1 { grid-row: 1 / 2; grid-column: 1 / 3; }.gallery-img-2 { grid-column: 1; }.gallery-img-3 { grid-column: 2; }.gallery-img-4 { grid-column: 1 / 3; }.rsvp-card { padding: 45px 28px; }.rsvp-card .display-heading { margin-top: 35px; }.rsvp-modal { padding: 42px 25px 30px; }.footer { padding: 80px 24px 25px; }.footer-bottom { margin-top: 75px; font-size: 8px; }.cover-copy h1 { font-size: 39px; } .cover-bouquet { width: 80px; } .cover-bouquet-left { left: 8px; } .cover-bouquet-right { right: 8px; } }
+```css
+@media (max-width: 760px) {
+  .section-pad { padding: 75px 24px; }
 
-@media (max-width: 760px) { .invitation-cover { gap: 22px; padding: 22px 18px; } .invitation-card { width: min(94vw, 620px); } }
-@media (max-width: 760px) { .full-entourage { grid-template-columns: 1fr; } .full-entourage--open { max-height: 4000px; } .entourage-group { min-height: 0; } }
-@media (max-width: 760px) { .flower-bloom { max-height: 70%; } .flower-bloom--story { left: -55px; bottom: 0; width: 390px; opacity: .52; } .flower-bloom--rsvp { right: -55px; bottom: 0; width: 380px; opacity: .52; } }
-@media (max-height: 720px) { .invitation-cover { gap: 12px; padding: 14px; } .cover-logo { margin-bottom: 8px; } .cover-intro { margin-bottom: 7px; } .cover-date { margin-top: 9px; } .invitation-card { width: min(560px, 72vw, 108vh); } }
-@media (prefers-reduced-motion: reduce) { .invitation-card, .invitation-cover--open .invitation-card { animation: none; } .invitation-cover { transition-duration: .35s; } .hero--introduced .typed-name { width: auto; opacity: 1; animation: none; } .hero--introduced .typed-join, .hero--introduced .hero-eyebrow, .hero--introduced .hero-meta, .hero--introduced .hero-content > .text-link, .is-visible .sliding-heading span, .is-visible .sliding-heading i, .is-visible .letter-char, .details-section.is-visible .countdown-digit, .gallery-carousel .carousel-photo { opacity: 1; transform: none; animation: none; } .details-section.is-visible .timeline > i:after { animation: none; } .flower-bloom { display: none; } }
-@media (max-width: 760px) {
-  .brand-mark { margin-left: -14px; }
-}
-@media (max-width: 760px) {
-  .display-heading { font-size: clamp(30px, 9vw, 44px); }
-  .details-heading-inner { padding: 0 20px; gap: 14px; }
-.countdown .time-row { gap: 12px; }
-  .center-heading { padding: 0 12px; }
-  .center-heading .display-heading,
-  .rsvp-card .display-heading { max-width: 300px; margin-left: auto; margin-right: auto; }
-.footer .footer-names { text-align: center; font-size: clamp(20px, 7.5vw, 32px); }
-.footer .footer-names .letter-line { width: 100%; text-align: center; white-space: nowrap; }
-}
-@media (max-width: 760px) {
-  .details-heading { align-items: center; }
+  .topbar { padding: 20px 24px; }
 
-  .flower-bloom--countdown-left { display: none; }
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 16px;
+    right: 16px;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 14px 22px;
+    background: rgba(12,35,55,.94);
+  }
+
+  .nav-links--visible { display: flex; }
+
+  .nav-links button {
+    padding: 13px 0;
+    text-align: left;
+  }
+
+  .menu-button {
+    display: block;
+    color: white;
+    padding: 5px;
+  }
+
+  .rsvp-pill {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  .brand-mark {
+    padding-right: 12px;
+    margin-left: -14px;
+  }
+
+  .hero {
+    min-height: 780px;
+    padding: 40px 24px 85px;
+  }
+
+  .hero h2 {
+    font-size: clamp(57px, 15vw, 100px);
+  }
+
+  .hero-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .meta-rule { display: none; }
+  .hero-vertical { display: none; }
+
+  .story-grid,
+  .dress-section,
+  .faq-section {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  .story-grid {
+    margin-top: 55px;
+  }
+
+  .story-image-wrap img {
+    height: 430px;
+  }
+
+  .details-heading {
+    align-items: center;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 55px;
+  }
+
+  .details-heading-inner {
+    padding: 0 20px;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .countdown .time-row {
+    gap: 12px;
+  }
+
+  .event-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .event-card,
+  .event-card + .event-card {
+    padding: 34px 0;
+  }
+
+  .event-card + .event-card {
+    border-top: 1px solid rgba(255,255,255,.2);
+    border-left: 0;
+  }
+
+  .event-card h3 {
+    font-size: 34px;
+  }
+
+  .timeline {
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+
+  .timeline > i {
+    min-width: 22px;
+  }
+
+  .people-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .people-grid > div + div {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .dress-section {
+    padding-top: 0;
+  }
+
+  .dress-content {
+    padding: 75px 24px 0;
+  }
+
+  .dress-image {
+    min-height: 430px;
+  }
+
+  .gallery-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 55px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 240px 170px 170px;
+  }
+
+  .gallery-img-1 {
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
+  }
+
+  .gallery-img-2 {
+    grid-column: 1;
+  }
+
+  .gallery-img-3 {
+    grid-column: 2;
+  }
+
+  .gallery-img-4 {
+    grid-column: 1 / 3;
+  }
+
+  .rsvp-card {
+    padding: 45px 28px;
+  }
+
+  .rsvp-card .display-heading {
+    margin-top: 35px;
+  }
+
+  .rsvp-modal {
+    padding: 42px 25px 30px;
+  }
+
+  .footer {
+    padding: 80px 24px 25px;
+  }
+
+  .footer-bottom {
+    margin-top: 75px;
+    font-size: 8px;
+  }
+
+  .cover-copy h1 {
+    font-size: 39px;
+  }
+
+  .cover-bouquet {
+    width: 80px;
+  }
+
+  .cover-bouquet-left {
+    left: 8px;
+  }
+
+  .cover-bouquet-right {
+    right: 8px;
+  }
+
+  .invitation-cover {
+    gap: 22px;
+    padding: 22px 18px;
+  }
+
+  .invitation-card {
+    width: min(94vw, 620px);
+  }
+
+  .full-entourage {
+    grid-template-columns: 1fr;
+  }
+
+  .full-entourage--open {
+    max-height: 4000px;
+  }
+
+  .entourage-group {
+    min-height: 0;
+  }
+
+  .flower-bloom {
+    max-height: 70%;
+  }
+
+  .flower-bloom--story {
+    left: -55px;
+    bottom: 0;
+    width: 390px;
+    opacity: .52;
+  }
+
+  .flower-bloom--rsvp {
+    right: -55px;
+    bottom: 0;
+    width: 380px;
+    opacity: .52;
+  }
+
+  .flower-bloom--countdown-left {
+    display: none;
+  }
+
   .flower-bloom--countdown-right {
     display: block;
     left: 50%;
@@ -248,5 +474,93 @@ button { cursor: pointer; }
     opacity: .4;
     z-index: 0;
   }
-  .details-heading-inner { position: relative; z-index: 1; }
+
+  .display-heading {
+    font-size: clamp(30px, 9vw, 44px);
+  }
+
+  .center-heading {
+    padding: 0 12px;
+  }
+
+  .center-heading .display-heading,
+  .rsvp-card .display-heading {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer .footer-names {
+    text-align: center;
+    font-size: clamp(20px, 7.5vw, 32px);
+  }
+
+  .footer .footer-names .letter-line {
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+  }
 }
+
+@media (max-height: 720px) {
+  .invitation-cover {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .cover-logo {
+    margin-bottom: 8px;
+  }
+
+  .cover-intro {
+    margin-bottom: 7px;
+  }
+
+  .cover-date {
+    margin-top: 9px;
+  }
+
+  .invitation-card {
+    width: min(560px, 72vw, 108vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation-card,
+  .invitation-cover--open .invitation-card {
+    animation: none;
+  }
+
+  .invitation-cover {
+    transition-duration: .35s;
+  }
+
+  .hero--introduced .typed-name {
+    width: auto;
+    opacity: 1;
+    animation: none;
+  }
+
+  .hero--introduced .typed-join,
+  .hero--introduced .hero-eyebrow,
+  .hero--introduced .hero-meta,
+  .hero--introduced .hero-content > .text-link,
+  .is-visible .sliding-heading span,
+  .is-visible .sliding-heading i,
+  .is-visible .letter-char,
+  .details-section.is-visible .countdown-digit,
+  .gallery-carousel .carousel-photo {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .details-section.is-visible .timeline > i:after {
+    animation: none;
+  }
+
+  .flower-bloom {
+    display: none;
+  }
+}
+```
