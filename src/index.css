@@ -226,6 +226,8 @@ button { cursor: pointer; }
 }
 @media (max-width: 760px) {
   .display-heading { font-size: clamp(30px, 9vw, 44px); }
+  .details-heading-inner { padding: 0 20px; gap: 14px; }
+.countdown .time-row { gap: 12px; }
   .center-heading { padding: 0 12px; }
   .center-heading .display-heading,
   .rsvp-card .display-heading { max-width: 300px; margin-left: auto; margin-right: auto; }
