@@ -231,8 +231,8 @@ button { cursor: pointer; }
   .center-heading { padding: 0 12px; }
   .center-heading .display-heading,
   .rsvp-card .display-heading { max-width: 300px; margin-left: auto; margin-right: auto; }
-  .footer .footer-names { text-align: center; }
-  .footer .footer-names .letter-line { width: 100%; text-align: center; }
+.footer .footer-names { text-align: center; font-size: clamp(20px, 7.5vw, 32px); }
+.footer .footer-names .letter-line { width: 100%; text-align: center; white-space: nowrap; }
 }
 @media (max-width: 760px) {
   .details-heading { align-items: center; }
