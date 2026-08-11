@@ -205,6 +205,92 @@ useEffect(() => {
   };
 }, [lightboxIndex]);
 
+useEffect(() => {
+  const video = storyLogoVideoRef.current;
+  const canvas = storyLogoCanvasRef.current;
+
+  if (!video || !canvas) return;
+
+  const ctx = canvas.getContext('2d', {
+    willReadFrequently: true,
+  });
+
+  if (!ctx) return;
+
+  let animationFrame: number;
+
+  const renderFrame = () => {
+    if (
+      video.readyState >= 2 &&
+      video.videoWidth > 0 &&
+      video.videoHeight > 0
+    ) {
+      if (
+        canvas.width !== video.videoWidth ||
+        canvas.height !== video.videoHeight
+      ) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+      }
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const frame = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const data = frame.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        const greenDominance = g - Math.max(r, b);
+
+        if (g > 80 && greenDominance > 35) {
+          const alpha = Math.max(
+            0,
+            Math.min(255, 255 - greenDominance * 4)
+          );
+
+          data[i + 3] = alpha;
+
+          if (alpha > 0) {
+            data[i + 1] = Math.min(
+              g,
+              (r + b) / 2
+            );
+          }
+        }
+      }
+
+      ctx.putImageData(frame, 0, 0);
+    }
+
+    animationFrame = requestAnimationFrame(renderFrame);
+  };
+
+  const start = () => {
+    video.play().catch(() => {});
+    renderFrame();
+  };
+
+  video.addEventListener('loadeddata', start);
+
+  if (video.readyState >= 2) {
+    start();
+  }
+
+  return () => {
+    cancelAnimationFrame(animationFrame);
+    video.removeEventListener('loadeddata', start);
+  };
+}, []);
+
   useEffect(() => {
     const weddingDate = new Date('2027-01-30T13:30:00+08:00').getTime();
     const updateCountdown = () => {

@@ -782,32 +782,7 @@ button { cursor: pointer; }
     text-align: center;
     white-space: nowrap;
   }
-}
-
-@media (max-height: 720px) {
-  .invitation-cover {
-    gap: 12px;
-    padding: 14px;
-  }
-
-  .cover-logo {
-    margin-bottom: 8px;
-  }
-
-  .cover-intro {
-    margin-bottom: 7px;
-  }
-
-  .cover-date {
-    margin-top: 9px;
-  }
-
-  .invitation-card {
-    width: min(560px, 72vw, 108vh);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
+  @media (prefers-reduced-motion: reduce) {
   .invitation-card,
   .invitation-cover--open .invitation-card {
     animation: none;
@@ -857,3 +832,29 @@ button { cursor: pointer; }
     margin-left: auto;
     margin-right: auto;
   }
+
+}
+
+@media (max-height: 720px) {
+  .invitation-cover {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .cover-logo {
+    margin-bottom: 8px;
+  }
+
+  .cover-intro {
+    margin-bottom: 7px;
+  }
+
+  .cover-date {
+    margin-top: 9px;
+  }
+
+  .invitation-card {
+    width: min(560px, 72vw, 108vh);
+  }
+}
+
