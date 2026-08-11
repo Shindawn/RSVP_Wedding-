@@ -606,37 +606,45 @@ button { cursor: pointer; }
   .event-card h3 {
     font-size: 34px;
   }
-  .event-card .map-button {
-  margin-top: 28px;
-  padding: 13px 22px;
+  /* White Open in Maps buttons */
+.event-card a.text-link.map-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
-  border: 1px solid rgba(49, 93, 107, 0.12);
-  border-radius: 999px;
+  margin-top: 28px;
+  padding: 14px 24px;
 
   background: #ffffff;
   color: #315d6b;
 
-  box-shadow: 0 6px 20px rgba(49, 93, 107, 0.08);
+  border: 1px solid rgba(49, 93, 107, 0.15);
+  border-radius: 999px;
+
+  box-shadow: 0 7px 20px rgba(49, 93, 107, 0.10);
+
+  text-decoration: none;
 
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
     background 0.25s ease;
-
-  text-decoration: none;
 }
 
-.event-card .map-button:hover {
-  background: #f7fcfe;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(49, 93, 107, 0.14);
+.event-card a.text-link.map-button:hover {
+  background: #ffffff;
+  color: #315d6b;
+
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(49, 93, 107, 0.17);
 }
 
-.event-card .map-button svg {
+.event-card a.text-link.map-button svg {
   transition: transform 0.25s ease;
 }
 
-.event-card .map-button:hover svg {
+.event-card a.text-link.map-button:hover svg {
   transform: translateX(4px);
 }
 
