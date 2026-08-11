@@ -65,7 +65,7 @@ button { cursor: pointer; }
 .hero-overlay { background: linear-gradient(90deg, rgba(37,66,79,.85) 0%, rgba(37,66,79,.5) 22%, rgba(37,66,79,.12) 42%, transparent 58%), linear-gradient(0deg, rgba(30,55,66,.55), transparent 40%); }
 .hero-content { position: relative; z-index: 1; padding-bottom: 4vh; }
 .hero h2 { margin: 0; font: 400 clamp(58px, 9vw, 135px)/.84 Georgia, serif; letter-spacing: -.075em; }
-.hero h2 i { color: #ffffff; font-family: 'Parisienne', cursive; font-weight: 400; font-size: 1.15em; }
+.hero h2 i { color: #ffffff; font-family: 'Parisienne', cursive; font-weight: 400; font-size: 1.15em; letter-spacing: 0; }
 .hero-names { display: flex; flex-direction: column; align-items: flex-start; }
 .typed-name { position: relative; display: block; width: 0; max-width: max-content; overflow: hidden; white-space: nowrap; opacity: 0; }
 .typed-name:after { content: ''; position: absolute; top: .08em; right: 0; width: 2px; height: .72em; background: #d8e8ee; opacity: 0; }
