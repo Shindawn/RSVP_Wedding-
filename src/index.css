@@ -117,7 +117,7 @@ button { cursor: pointer; }
 .event-cards { display: grid; grid-template-columns: repeat(2, 1fr); max-width: 1200px; margin: auto; border-top: 1px solid #315d6b; border-bottom: 1px solid #315d6b; }
 .event-card { padding: 45px 5vw 52px 5vw; text-align: center; display: flex; flex-direction: column; align-items: center; }
 .event-card + .event-card { border-left: 1px solid #315d6b; }
-.event-icon { display: grid; place-items: center; width: 46px; height: 46px; margin: 0 0 25px; border: 1px solid var(--line); border-radius: 50%; background: #ffffff; box-shadow: 0 4px 12px rgba(49, 93, 107, 0.08); color: #6587a9; }
+.event-icon { display: grid; place-items: center; width: 46px; height: 46px; margin: 0 0 25px; border: 1px solid var(--line); border-radius: 50%; color: #6587a9; }
 .event-card .eyebrow { margin-bottom: 15px; color: #8291a0; }
 .event-info { justify-content: center; }
 .event-card h3 { margin: 0; font: 400 40px/.95 Georgia, serif; letter-spacing: -.06em; color: #486F88; }
@@ -628,6 +628,9 @@ button { cursor: pointer; }
   .countdown .time-row {
     gap: 12px;
   }
+  .countdown .time-value {
+    font: clamp(40px, 13vw, 62px)/1 Georgia, serif;
+  }
 
   .event-cards {
     grid-template-columns: 1fr;
@@ -646,6 +649,7 @@ button { cursor: pointer; }
   .event-card h3 {
     font-size: 34px;
   }
+
 
   .timeline {
     overflow-x: auto;
