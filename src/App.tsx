@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CSSProperties } from 'react';
-import { ArrowDown, ArrowRight, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const heroImage = 'https://images.pexels.com/photos/15984448/pexels-photo-15984448.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
 const heroBgImage = '/images/aicc.png';
@@ -456,7 +456,7 @@ useEffect(() => {
 
         <div className="event-cards">
           <article className="event-card">
-            <div className="event-icon"><Flower2 size={22} /></div>
+            <div className="event-icon"><Church size={22} /></div>
             <p className="eyebrow">The ceremony</p>
             <h3>Archbishop<br />Palace Chapel</h3>
             <p className="event-info"><Clock3 size={15} /> 1:30PM</p>
@@ -464,7 +464,7 @@ useEffect(() => {
             <a className="text-link map-button" href="https://maps.app.goo.gl/CM897Wko3joafugn6" target="_blank" rel="noopener noreferrer" aria-label="Open ceremony location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
           </article>
           <article className="event-card">
-            <div className="event-icon"><Music2 size={22} /></div>
+            <div className="event-icon"><Building2 size={22} /></div>
             <p className="eyebrow">The reception</p>
             <h3>UMA Hotel<br />+ Residences</h3>
             <p className="event-info"><Clock3 size={15} /> 5:00PM</p>
