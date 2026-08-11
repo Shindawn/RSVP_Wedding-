@@ -4,7 +4,7 @@ import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, C
 
 
 const heroImage = 'https://images.pexels.com/photos/15984448/pexels-photo-15984448.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
-const heroBgImage = '/images/aicc.webp';
+const heroBgImage = '/images/aicc.png';
 const detailImage = 'https://images.pexels.com/photos/18950615/pexels-photo-18950615.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
 const dressCodeImage = '/images/dresscode.png';
 const galleryImages = [heroImage, 'https://images.pexels.com/photos/16040526/pexels-photo-16040526.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', 'https://images.pexels.com/photos/8291807/pexels-photo-8291807.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', detailImage];
