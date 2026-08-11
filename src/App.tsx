@@ -4,7 +4,7 @@ import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, C
 
 
 const heroImage = 'https://images.pexels.com/photos/15984448/pexels-photo-15984448.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
-const heroBgImage = '/images/aicc.png';
+const heroBgImage = '/images/aicc.webp';
 const detailImage = 'https://images.pexels.com/photos/18950615/pexels-photo-18950615.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
 const dressCodeImage = '/images/dresscode.png';
 const galleryImages = [heroImage, 'https://images.pexels.com/photos/16040526/pexels-photo-16040526.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', 'https://images.pexels.com/photos/8291807/pexels-photo-8291807.jpeg?auto=compress&cs=tinysrgb&h=800&w=1200', detailImage];
@@ -406,7 +406,12 @@ useEffect(() => {
         <div className="cover-copy"><span className="cover-logo">C <em>&</em> C</span><span className="cover-intro">A wedding invitation</span><h1>Charlon <i>&</i> Chilzia</h1><span className="cover-date">30 · 01 · 2027</span></div>
         <button className="invitation-card" onClick={() => { setIsOpen(true); if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.volume = 0.25; audioRef.current.play().catch(() => {}); } }} aria-label="Open Charlon and Chilzia's wedding invitation">
           <span className="invitation-card-glow" />
-          <img src="/images/invitation-envelope.png" alt="Blue floral wedding invitation envelope" />
+          <img 
+  src="/images/invitation-envelope.webp" 
+  alt="Blue floral wedding invitation envelope" 
+  fetchPriority="high"
+  loading="eager"
+/>
         </button>
         <button className="open-invitation" onClick={() => { setIsOpen(true); if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.volume = 0.25; audioRef.current.play().catch(() => {}); } }}>Tap the envelope</button>
       </div>
