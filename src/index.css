@@ -888,6 +888,21 @@ button { cursor: pointer; }
 }
 
 }
+@media (max-width: 768px) {
+  .brand-mark {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    z-index: 10;
+  }
+
+  .brand-mark img {
+    width: 85px;
+    height: auto;
+  }
+}
 
 @media (max-height: 720px) {
   .invitation-cover {

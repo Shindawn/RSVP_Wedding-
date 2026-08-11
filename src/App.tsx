@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CSSProperties } from 'react';
 import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
+
 const heroImage = 'https://images.pexels.com/photos/15984448/pexels-photo-15984448.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
 const heroBgImage = '/images/aicc.png';
 const detailImage = 'https://images.pexels.com/photos/18950615/pexels-photo-18950615.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
