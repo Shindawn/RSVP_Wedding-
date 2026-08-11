@@ -93,8 +93,9 @@ button { cursor: pointer; }
 .location-tag { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(6px); color: white; font: 12px/1 Arial, Helvetica, sans-serif; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 6px rgba(0,0,0,.55); opacity: 0; pointer-events: none; transition: opacity .3s ease, transform .3s ease; }
 .story-image-wrap:hover .location-tag,
 .story-image-wrap--active .location-tag { opacity: 1; transform: translateX(-50%) translateY(0); }
-.signature { width: 155px; margin-top: 25px; }
-.signature img { display: block; width: 100%; height: auto; }
+.signature { position: relative; width: 155px; margin-top: 25px; }
+.signature-source { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.signature-canvas { display: block; width: 100%; height: auto; }
 
 .details-section { background: #D9F0F7; color: var(--ink); }
 .details-heading { display: flex; justify-content: center; align-items: flex-start; margin-top: 80px; margin-bottom: 55px; padding: 56px 0; background: #D9F0F7; position: relative; isolation: isolate; }
@@ -844,3 +845,15 @@ button { cursor: pointer; }
     display: none;
   }
 }
+.location-tag {
+    width: 86%;
+    left: 50%;
+    text-align: center;
+    white-space: normal;
+    transform: translateX(-50%) translateY(6px);
+  }
+
+  .story-grid .signature {
+    margin-left: auto;
+    margin-right: auto;
+  }
