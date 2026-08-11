@@ -461,7 +461,7 @@ useEffect(() => {
             <h3>Archbishop<br />Palace Chapel</h3>
             <p className="event-info"><Clock3 size={15} /> 1:30PM</p>
             <p className="event-info"><MapPin size={15} /> Naga City, Camarines Sur</p>
-            <a className="text-link" href="https://maps.app.goo.gl/CM897Wko3joafugn6" target="_blank" rel="noopener noreferrer" aria-label="Open ceremony location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
+            <a className="text-link map-button" href="https://maps.app.goo.gl/CM897Wko3joafugn6" target="_blank" rel="noopener noreferrer" aria-label="Open ceremony location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
           </article>
           <article className="event-card">
             <div className="event-icon"><Music2 size={22} /></div>
@@ -469,7 +469,7 @@ useEffect(() => {
             <h3>UMA Hotel<br />+ Residences</h3>
             <p className="event-info"><Clock3 size={15} /> 5:00PM</p>
             <p className="event-info"><MapPin size={15} /> Magsaysay Avenue, Naga</p>
-            <a className="text-link" href="https://maps.app.goo.gl/BQUbJPR3jdWKx5Bq8" target="_blank" rel="noopener noreferrer" aria-label="Open UMA Hotel location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
+            <a className="text-link map-button" href="https://maps.app.goo.gl/BQUbJPR3jdWKx5Bq8" target="_blank" rel="noopener noreferrer" aria-label="Open UMA Hotel location in Google Maps">Open in Maps<ArrowRight size={15} /></a>
           </article>
         </div>
 
