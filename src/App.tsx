@@ -361,10 +361,12 @@ useEffect(() => {
 
   const handleRsvpSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formspreeId = import.meta.env.VITE_FORMSPREE_FORM_ID;
+    const formspreeId = import.meta.env.VITE_FORMSPREE_FORM_ID as string | undefined;
+    const appsScriptUrl = import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined;
+    const appsScriptToken = import.meta.env.VITE_APPS_SCRIPT_TOKEN as string | undefined;
 
     if (!formspreeId) {
-      setSubmitError('RSVP is not configured yet. Please try again later.');
+      setSubmitError('RSVP is not configured yet. Please set VITE_FORMSPREE_FORM_ID and redeploy.');
       return;
     }
 
@@ -391,7 +393,34 @@ useEffect(() => {
         throw new Error(data?.error ?? 'Something went wrong. Please try again.');
       }
 
+      // Mark the UI as submitted (Formspree succeeded)
       setSubmitted(true);
+
+      // Attempt to POST the same payload to the Apps Script endpoint (best-effort)
+      if (appsScriptUrl) {
+        try {
+          const sheetResp = await fetch(appsScriptUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-APP-TOKEN': appsScriptToken ?? '',
+            },
+            body: JSON.stringify({
+              name: rsvpName,
+              attendance: rsvpAttendance === 'yes' ? 'Joyfully accepts' : 'Regretfully declines',
+              message: rsvpMessage.trim() || '(none)',
+              _subject: `RSVP: ${rsvpName}`,
+              token: appsScriptToken ?? '',
+            }),
+          });
+
+          if (!sheetResp.ok) {
+            console.warn('Apps Script POST returned', sheetResp.status);
+          }
+        } catch (err) {
+          console.warn('Apps Script POST failed', err);
+        }
+      }
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
     } finally {
