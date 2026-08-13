@@ -364,6 +364,7 @@ useEffect(() => {
     const formspreeId = import.meta.env.VITE_FORMSPREE_FORM_ID as string | undefined;
     const appsScriptUrl = import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined;
     const appsScriptToken = import.meta.env.VITE_APPS_SCRIPT_TOKEN as string | undefined;
+ const zapierUrl = import.meta.env.VITE_WEBHOOK_URL as string | undefined;
 
     if (!formspreeId) {
       setSubmitError('RSVP is not configured yet. Please set VITE_FORMSPREE_FORM_ID and redeploy.');
@@ -396,8 +397,32 @@ useEffect(() => {
       // Mark the UI as submitted (Formspree succeeded)
       setSubmitted(true);
 
-      // Attempt to POST the same payload to the Apps Script endpoint (best-effort)
-      if (appsScriptUrl) {
+      // Attempt to POST the same payload to Zapier (preferred) or Apps Script (fallback)
+      const payload = {
+        name: rsvpName,
+        attendance: rsvpAttendance === 'yes' ? 'Joyfully accepts' : 'Regretfully declines',
+        message: rsvpMessage.trim() || '(none)',
+        _subject: `RSVP: ${rsvpName}`,
+        timestamp: new Date().toISOString(),
+      };
+
+      if (zapierUrl) {
+        try {
+          const zapResp = await fetch(zapierUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!zapResp.ok) {
+            console.warn('Zapier webhook returned', zapResp.status);
+          }
+        } catch (err) {
+          console.warn('Zapier webhook failed', err);
+        }
+      } else if (appsScriptUrl) {
         try {
           const sheetResp = await fetch(appsScriptUrl, {
             method: 'POST',
@@ -405,13 +430,7 @@ useEffect(() => {
               'Content-Type': 'application/json',
               'X-APP-TOKEN': appsScriptToken ?? '',
             },
-            body: JSON.stringify({
-              name: rsvpName,
-              attendance: rsvpAttendance === 'yes' ? 'Joyfully accepts' : 'Regretfully declines',
-              message: rsvpMessage.trim() || '(none)',
-              _subject: `RSVP: ${rsvpName}`,
-              token: appsScriptToken ?? '',
-            }),
+            body: JSON.stringify({ ...payload, token: appsScriptToken ?? '' }),
           });
 
           if (!sheetResp.ok) {
