@@ -449,19 +449,39 @@ useEffect(() => {
 
   return (
     <main className="site-shell">
-      <div className={`invitation-cover ${isOpen ? 'invitation-cover--open' : ''}`} aria-hidden={isOpen}>
-        <div className="cover-grain" />
-        <div className="cover-copy"><span className="cover-logo">C <em>&</em> C</span><span className="cover-intro">A wedding invitation</span><h1>Charlon <i>&</i> Chilzia</h1><span className="cover-date">30 · 01 · 2027</span></div>
-        <button className="invitation-card" onClick={() => { setIsOpen(true); if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.volume = 0.25; audioRef.current.play().catch(() => {}); } }} aria-label="Open Charlon and Chilzia's wedding invitation">
+     <div className={`invitation-cover ${isOpen ? 'invitation-cover--open' : ''}`} aria-hidden={isOpen}>
+        <div className="cover-monogram">
+          <img src="/images/cc-logo-blue.png" alt="Charlon and Chilzia monogram" />
+        </div>
+
+        <button
+          className="invitation-card"
+          onClick={() => {
+            setIsOpen(true);
+            if (audioRef.current) {
+              audioRef.current.currentTime = 0;
+              audioRef.current.volume = 0.25;
+              audioRef.current.play().catch(() => {});
+            }
+          }}
+          aria-label="Open Charlon and Chilzia's wedding invitation"
+        >
           <span className="invitation-card-glow" />
-          <img 
-  src="/images/invitation-envelope.webp" 
-  alt="Blue floral wedding invitation envelope" 
-  fetchPriority="high"
-  loading="eager"
-/>
+          <img
+            src="/images/cover-couple.jpg"
+            alt="Charlon and Chilzia"
+            fetchPriority="high"
+            loading="eager"
+          />
+          <span className="tap-here">Tap here</span>
         </button>
-        <button className="open-invitation" onClick={() => { setIsOpen(true); if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.volume = 0.25; audioRef.current.play().catch(() => {}); } }}>Tap the envelope</button>
+
+        <div className="cover-names">Charlon <span>&</span> Chilzia</div>
+
+        <div className="cover-details">
+          <span>January 30, 2027</span>
+          <span>In the heart of Bicol</span>
+        </div>
       </div>
 
       <audio ref={audioRef} src="/audio/bg-music.mp3" preload="auto" loop />
