@@ -33,7 +33,7 @@ button { cursor: pointer; }
 .cover-monogram-source { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .cover-monogram-canvas { display: block; width: 100%; height: auto; }
 
-.invitation-card { position: relative; width: clamp(194px, 25vw, 245px); aspect-ratio: 2 / 3; border: 0; padding: 0; background: #c9dfe9; overflow: hidden; }
+.invitation-card { position: relative; width: clamp(194px, 25vw, 245px); aspect-ratio: 2 / 3; margin-top: clamp(8px, 1.5vh, 14px); border: 0; padding: 0; background: #c9dfe9; overflow: hidden; }
 .invitation-card::after { content: ''; position: absolute; z-index: 2; inset: 0; pointer-events: none; background: rgba(164, 204, 222, .52); mix-blend-mode: color; }
 .invitation-card img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(1) contrast(.92) brightness(1.08); }
 .invitation-card-glow { display: none; }
@@ -66,7 +66,7 @@ button { cursor: pointer; }
 .hero-overlay { background: linear-gradient(90deg, rgba(37,66,79,.85) 0%, rgba(37,66,79,.5) 22%, rgba(37,66,79,.12) 42%, transparent 58%), linear-gradient(0deg, rgba(30,55,66,.55), transparent 40%); }
 .hero-content { position: relative; z-index: 1; padding-bottom: 4vh; }
 .hero h2 { margin: 0; font-family: 'Montserrat', Arial, sans-serif; font-weight: 300; font-size: clamp(58px, 9vw, 135px); line-height: .84; letter-spacing: -.03em; }
-.hero h2 i { color: #ffffff; font-family: 'Montserrat', Arial, sans-serif; font-style: italic; font-weight: 300; font-size: 1.15em; letter-spacing: 0; }
+.hero h2 i { color: #ffffff; font-family: 'Montserrat', Arial, sans-serif; font-style: italic; font-weight: 300; font-size: 1em; letter-spacing: 0; }
 .hero-names { display: flex; flex-direction: column; align-items: flex-start; }
 .typed-name { position: relative; display: block; width: 0; max-width: max-content; overflow: hidden; white-space: nowrap; opacity: 0; }
 .typed-name:after { content: ''; position: absolute; top: .08em; right: 0; width: 2px; height: .72em; background: #d8e8ee; opacity: 0; }
@@ -816,6 +816,10 @@ button { cursor: pointer; }
 
   .center-heading {
     padding: 0 12px;
+  }
+
+  .entourage-section .display-heading {
+    font-size: clamp(28px, 8vw, 38px);
   }
 
   .center-heading .display-heading,
