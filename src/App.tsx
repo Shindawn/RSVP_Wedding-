@@ -602,9 +602,6 @@ useEffect(() => {
       ]}
     />
 
-    <p className="body-copy">
-      A few frames from the beginning of our forever.
-    </p>
   </div>
 
   <div className="gallery-grid">
