@@ -606,6 +606,9 @@ button { cursor: pointer; }
 
   .menu-button {
     display: block;
+    margin-left: auto;
+    position: relative;
+    z-index: 11;
     color: white;
     padding: 5px;
   }
@@ -618,6 +621,7 @@ button { cursor: pointer; }
   .brand-mark {
     padding-right: 12px;
     margin-left: -14px;
+    margin-right: auto;
   }
 
   .hero {
@@ -832,7 +836,7 @@ button { cursor: pointer; }
   }
 
   .offertory-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .entourage-group {
