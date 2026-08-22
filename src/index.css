@@ -215,17 +215,14 @@ button { cursor: pointer; }
 .entourage-group:nth-child(4),
 .entourage-group:nth-child(7) { grid-column: 1 / -1; }
 .entourage-group:first-child { text-align: center; }
-.entourage-group:nth-child(4) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.entourage-group:nth-child(4) { display: block; }
 .entourage-group:nth-child(7) { text-align: center; }
-.entourage-group:nth-child(4) .eyebrow { grid-column: 1 / -1; text-align: center; }
-.entourage-group:nth-child(4) span { display: block; width: auto; }
-.entourage-group:nth-child(4) span:nth-child(odd) { text-align: right; }
-.entourage-group:nth-child(4) span:nth-child(even) { text-align: left; }
 .entourage-group .eyebrow { margin-bottom: 14px; text-decoration: none; font-weight: 700; }
 .entourage-group--nested { grid-column: 1 / -1; text-align: center !important; }
 .entourage-group--columns .eyebrow { margin-bottom: 22px; }
-.entourage-sponsor-rows { display: grid; gap: 13px; }
+.entourage-sponsor-rows { display: grid; gap: 0; }
 .entourage-sponsor-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.entourage-sponsor-row span { margin: 7px 0; }
 .entourage-sponsor-row span:first-child { text-align: right; }
 .entourage-sponsor-row span:last-child { text-align: left; }
 .offertory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 24px; }
