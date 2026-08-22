@@ -1,6 +1,7 @@
 ﻿import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CSSProperties } from 'react';
 import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { entourageGroups } from './entourageData';
 
 
 const heroImage = 'https://images.pexels.com/photos/15984448/pexels-photo-15984448.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800';
@@ -20,39 +21,6 @@ const previewSlides = [
 const allGalleryImages = [
   ...previewSlides,
   ...galleryImages.slice(1),
-];
-
-const entourageGroups = [
-  { title: 'Officiating Priest', names: ['Most Rev. Jose R. Rojas, Jr., D.D.'] },
-  { title: 'Parents of the Groom', names: ['Mr. Charles M. Caadlawon', 'Engr. Precita G. Caadlawon'] },
-  { title: 'Parents of the Bride', names: ['PLTCOL Francisco R Rojas (Ret)', 'Ms. Regina T. Rojas'] },
-  { title: 'Principal Sponsors', columns: [
-    ['Hon. Eric T. Rodriguez', 'Mr. Arcangel T. Rodriguez', 'Mr. Henry B. Tipay', 'Mr. Charles Andrew -- Hoar', 'Dr. Edna T. Villamor', 'Engr. Roselle C. Turreda', 'Ms. Helen V. Diaz'],
-    ['Hon. Eddie D. Vitalicio', 'Mr. Sulastiano -- Evangelista', 'Mr. Mario -- Diaz', 'Dr. Susan C. Collano', 'Engr. Rosana T. Camacho', 'Ms. Maria Teresa P. Tipay', 'Ms. Romina C. Hoar'],
-  ] },
-  { title: 'Bestman', names: ['Atty. Aaron Chrysler G. Caadlawon'] },
-  { title: 'Maid of Honor', names: ['Atty. Mary France S. Soquerata'] },
-  { title: 'Matron of Honor', names: ['Ms. Ghenna R. Salamat'] },
-  { title: 'Groomsmen', names: ['Engr. Romeo S. Coronejo', 'Mr. Franklin S. Oclarino', 'Atty. Michael Angelo V. Marquez', 'Hon. Emil Kurt C. Villaforta', 'Mr. Lorenz Kurt C. Abrazaldo'] },
-  { title: 'Bridesmaids', names: ['Ms. Christine Joy T. Camacho', 'Atty. Judea Lynn Q. Ballesteros', 'Atty. Michelli B. Samonte', 'Atty. Jan Elna A. Natividad-Casipong', 'Ms. Denn Reed -- Magbanua'] },
-  { title: 'Candle', names: ['Mr. Frank Scott T. Rojas', 'Dr. Mary Grace B. Rojas'] },
-  { title: 'Veil', names: ['Engr. Chris Angelo G. Caadlawon', 'Ms. Irish M. Caadlawon'] },
-  { title: 'Cord', names: ['Mr. Mark Lester V. Urbano', 'Ms. Chelou Mae B. Bautista'] },
-  { title: 'Rosary', names: ['Mr. Jedy C. Orcales', 'Ms. Jessabel M. Coronejo'] },
-  { title: 'Ring Bearer', names: ['Kaden B. Rojas'] },
-  { title: 'Coin Bearer', names: ['Cassius T. Caadlawon'] },
-  { title: 'Bible Bearer', names: ['Lucas M. Caadlawon'] },
-  { title: 'Crucifix Bearer', names: ['Ethan C. Arcilla'] },
-  { title: 'Flower Girls', names: ['Yzabella R. Salamat', 'Kiara B. Rojas', 'Diane Faye S. Tipay', 'Faith -- Tebelin', 'Hope -- Tebelin'] },
-  { title: 'Flower Ladies', names: ['Engr. Shane T. Magtagnob', 'Ms. Maria Azucena P. Evangelista', 'Ms. Jemarie - Darisan', 'Ms. Janine - Villacorta'] },
-  { title: 'Offertory', subgroups: [
-    { title: 'Bread', names: ['Mr. Manuel N. Tipay, Sr.', 'Ms. Daisy B. Tipay'] },
-    { title: 'Egg', names: ['Mr. Remagen -- Nieves', 'Ms. Dannica Rose T. Nieves'] },
-    { title: 'Flowers', names: ['Ms. Glazhelle D. Aguiler', 'Mr. Kobe -- C. Arcilla'] },
-    { title: 'Fruits', names: ['Ms. Evelyn T. Olitoquit', 'Mr. Kennith Harry P. Tipay'] },
-    { title: 'Candle', names: ['Ms. Tiffany C. Bonifacio', 'Ms. Tinegine C. Bonifacio'] },
-    { title: 'Wine', names: ['Ms. Hazel -- Soriao', 'Ms. Timmy C. Bonifaco'] },
-  ] },
 ];
 
 function AnimatedHeading({ lines, className = '' }: { lines: Array<{ text: string; italic?: boolean }>; className?: string }) {
@@ -582,7 +550,7 @@ useEffect(() => {
 
       <section className="dress-section section-pad reveal-on-scroll"><div className="dress-content"><p className="eyebrow">Dress code</p><AnimatedHeading lines={[{ text: 'Dusty blue' }, { text: 'and formal.', italic: true }]} /><p className="body-copy">We would love to see you in soft, romantic tones. Gentlemen in navy, charcoal, or dusty blue; ladies in ice blue, champagne, or silver.</p><div className="swatches"><span className="swatch ice" /><span className="swatch dusty" /><span className="swatch navy" /><span className="swatch silver" /><span className="swatch champagne" /></div><p className="tiny-note">Please avoid wearing white.</p></div><div className="dress-image" style={{ backgroundImage: `url(${dressCodeImage})` }} /></section>
 
-      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="entourage-preview"><h2>Caadlawon &amp; Rojas</h2><p>Nuptials</p></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className={`entourage-group${group.subgroups || group.columns ? ' entourage-group--nested' : ''}${group.columns ? ' entourage-group--columns' : ''}`} key={group.title}><p className="eyebrow blue">{group.title}</p>{group.columns ? <div className="entourage-sponsor-rows">{Array.from({ length: Math.max(...group.columns.map(column => column.length)) }, (_, rowIndex) => <div className="entourage-sponsor-row" key={rowIndex}><span>{group.columns[0][rowIndex] ?? ''}</span><span>{group.columns[1][rowIndex] ?? ''}</span></div>)}</div> : group.subgroups ? <div className="offertory-grid">{group.subgroups.map(subgroup => <div className="offertory-item" key={subgroup.title}><p className="eyebrow blue">{subgroup.title}</p>{subgroup.names.map(name => <span key={name}>{name}</span>)}</div>)}</div> : group.names?.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
+      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="entourage-preview"><h2>Caadlawon &amp; Rojas</h2><p>Nuptials</p></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className={`entourage-group${group.subgroups || group.columns ? ' entourage-group--nested' : ''}${group.columns ? ' entourage-group--columns' : ''}`} style={{ '--mobile-order': group.mobileOrder } as CSSProperties} key={group.title}><p className="eyebrow blue">{group.title}</p>{group.columns ? <div className="entourage-sponsor-rows">{Array.from({ length: Math.max(...group.columns.map(column => column.length)) }, (_, rowIndex) => <div className="entourage-sponsor-row" key={rowIndex}><span>{group.columns[0][rowIndex] ?? ''}</span><span>{group.columns[1][rowIndex] ?? ''}</span></div>)}</div> : group.subgroups ? <div className="offertory-grid">{group.subgroups.map(subgroup => <div className="offertory-item" key={subgroup.title}><p className="eyebrow blue">{subgroup.title}</p>{subgroup.names.map(name => <span key={name}>{name}</span>)}</div>)}</div> : group.names?.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
 
       <section
   className="gallery-section section-pad reveal-on-scroll"

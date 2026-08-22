@@ -829,6 +829,7 @@ button { cursor: pointer; }
 
   .entourage-section .entourage-group {
     text-align: center;
+    order: var(--mobile-order);
   }
 
   .entourage-group:nth-child(4) span {
