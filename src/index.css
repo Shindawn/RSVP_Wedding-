@@ -192,13 +192,40 @@ button { cursor: pointer; }
 .people-grid > div + div { border-left: 1px solid var(--line); }
 .people-grid h3 { margin: 0; font-family: 'Montserrat', Arial, sans-serif; font-weight: 300; font-size: 28px; }
 .muted { color: #71808b; font-family: 'Montserrat', Arial, sans-serif; font-style: italic; font-weight: 400; font-size: 14px; line-height: 1.6; }
-.full-entourage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; max-width: 1000px; max-height: 0; margin: 0 auto; overflow-x: hidden; overflow-y: hidden; opacity: 0; background: var(--line); transition: max-height .85s cubic-bezier(.22,1,.36,1), opacity .45s ease, margin .6s ease; }
+.full-entourage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 34px; max-width: 1000px; max-height: 0; margin: 0 auto; overflow-x: hidden; overflow-y: hidden; opacity: 0; transition: max-height .85s cubic-bezier(.22,1,.36,1), opacity .45s ease, margin .6s ease; }
 .full-entourage--open { max-height: min(72vh, 760px); margin-top: 34px; overflow-y: auto; opacity: 1; }
-.entourage-group { min-height: 145px; padding: 27px 25px; background: #eff3f1; text-align: left; }
+.entourage-group { min-height: 0; padding: 10px 8px; text-align: center; }
+.entourage-group:nth-child(2),
+.entourage-group:nth-child(5),
+.entourage-group:nth-child(8),
+.entourage-group:nth-child(10),
+.entourage-group:nth-child(12),
+.entourage-group:nth-child(14),
+.entourage-group:nth-child(16),
+.entourage-group:nth-child(18) { text-align: right; }
+.entourage-group:nth-child(3),
+.entourage-group:nth-child(6),
+.entourage-group:nth-child(9),
+.entourage-group:nth-child(11),
+.entourage-group:nth-child(13),
+.entourage-group:nth-child(15),
+.entourage-group:nth-child(17),
+.entourage-group:nth-child(19) { text-align: left; }
 .entourage-group:first-child,
-.entourage-group:nth-child(4) { grid-column: 1 / -1; text-align: center; }
-.entourage-group:nth-child(4) span { display: inline-block; width: calc(50% - 12px); vertical-align: top; }
-.entourage-group .eyebrow { margin-bottom: 14px; }
+.entourage-group:nth-child(4),
+.entourage-group:nth-child(7) { grid-column: 1 / -1; }
+.entourage-group:first-child { text-align: center; }
+.entourage-group:nth-child(4) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.entourage-group:nth-child(7) { text-align: center; }
+.entourage-group:nth-child(4) .eyebrow { grid-column: 1 / -1; text-align: center; }
+.entourage-group:nth-child(4) span { display: block; width: auto; }
+.entourage-group:nth-child(4) span:nth-child(odd) { text-align: right; }
+.entourage-group:nth-child(4) span:nth-child(even) { text-align: left; }
+.entourage-group .eyebrow { margin-bottom: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.entourage-group--nested { grid-column: 1 / -1; text-align: center !important; }
+.offertory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 24px; }
+.offertory-item .eyebrow { margin-bottom: 10px; }
+.offertory-item span { display: block; }
 .entourage-group span { display: block; margin: 7px 0; color: var(--ink); font-family: 'Montserrat', Arial, sans-serif; font-weight: 400; font-size: 17px; line-height: 1.25; }
 .entourage-toggle { display: flex; align-items: center; gap: 10px; margin: 35px auto 0; border: 0; border-bottom: 1px solid currentColor; padding: 0 0 8px; background: transparent; color: var(--ink); font-family: 'Montserrat', Arial, sans-serif; font-size: 10px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; }
 .entourage-toggle svg { transition: transform .3s ease; }
@@ -778,13 +805,27 @@ button { cursor: pointer; }
   }
 
   .entourage-group:first-child,
-  .entourage-group:nth-child(4) {
+  .entourage-group:nth-child(4),
+  .entourage-group:nth-child(7) {
     grid-column: auto;
+  }
+
+  .entourage-group:nth-child(4) {
+    display: block;
+  }
+
+  .entourage-section .entourage-group {
+    text-align: center;
   }
 
   .entourage-group:nth-child(4) span {
     display: block;
     width: auto;
+    text-align: center;
+  }
+
+  .offertory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .entourage-group {

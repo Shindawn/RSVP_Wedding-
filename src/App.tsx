@@ -42,7 +42,14 @@ const entourageGroups = [
   { title: 'Crucifix Bearer', names: ['Ethan C. Arcilla'] },
   { title: 'Flower Girls', names: ['Yzabella R. Salamat', 'Kiara B. Rojas', 'Diane Faye S. Tipay', 'Faith -- Tebelin', 'Hope -- Tebelin'] },
   { title: 'Flower Ladies', names: ['Engr. Shane T. Magtagnob', 'Ms. Maria Azucena P. Evangelista', 'Ms. Jemarie - Darisan', 'Ms. Janine - Villacorta'] },
-  { title: 'Offertory', names: ['Bread', 'Egg', 'Flowers', 'Fruits', 'Candle', 'Wine'] },
+  { title: 'Offertory', subgroups: [
+    { title: 'Bread', names: ['Mr. Manuel N. Tipay, Sr.', 'Ms. Daisy B. Tipay'] },
+    { title: 'Egg', names: ['Mr. Remagen -- Nieves', 'Ms. Dannica Rose T. Nieves'] },
+    { title: 'Flowers', names: ['Ms. Glazhelle D. Aguiler', 'Mr. Kobe -- C. Arcilla'] },
+    { title: 'Fruits', names: ['Ms. Evelyn T. Olitoquit', 'Mr. Kennith Harry P. Tipay'] },
+    { title: 'Candle', names: ['Ms. Tiffany C. Bonifacio', 'Ms. Tinegine C. Bonifacio'] },
+    { title: 'Wine', names: ['Ms. Hazel -- Soriao', 'Ms. Timmy C. Bonifaco'] },
+  ] },
 ];
 
 function AnimatedHeading({ lines, className = '' }: { lines: Array<{ text: string; italic?: boolean }>; className?: string }) {
@@ -572,7 +579,7 @@ useEffect(() => {
 
       <section className="dress-section section-pad reveal-on-scroll"><div className="dress-content"><p className="eyebrow">Dress code</p><AnimatedHeading lines={[{ text: 'Dusty blue' }, { text: 'and formal.', italic: true }]} /><p className="body-copy">We would love to see you in soft, romantic tones. Gentlemen in navy, charcoal, or dusty blue; ladies in ice blue, champagne, or silver.</p><div className="swatches"><span className="swatch ice" /><span className="swatch dusty" /><span className="swatch navy" /><span className="swatch silver" /><span className="swatch champagne" /></div><p className="tiny-note">Please avoid wearing white.</p></div><div className="dress-image" style={{ backgroundImage: `url(${dressCodeImage})` }} /></section>
 
-      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="center-heading"><p className="eyebrow blue">With our favorite people</p><AnimatedHeading lines={[{ text: 'The ones who make' }, { text: 'our story complete.', italic: true }]} /></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className="entourage-group" key={group.title}><p className="eyebrow blue">{group.title}</p>{group.names.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
+      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="center-heading"><p className="eyebrow blue">With our favorite people</p><AnimatedHeading lines={[{ text: 'The ones who make' }, { text: 'our story complete.', italic: true }]} /></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className={`entourage-group${group.subgroups ? ' entourage-group--nested' : ''}`} key={group.title}><p className="eyebrow blue">{group.title}</p>{group.subgroups ? <div className="offertory-grid">{group.subgroups.map(subgroup => <div className="offertory-item" key={subgroup.title}><p className="eyebrow blue">{subgroup.title}</p>{subgroup.names.map(name => <span key={name}>{name}</span>)}</div>)}</div> : group.names?.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
 
       <section
   className="gallery-section section-pad reveal-on-scroll"
