@@ -11,8 +11,8 @@ export const entourageGroups: EntourageGroup[] = [
   { title: 'Parents of the Groom', names: ['Mr. Charles M. Caadlawon', 'Engr. Precita G. Caadlawon'], mobileOrder: 2 },
   { title: 'Parents of the Bride', names: ['PLTCOL Francisco R Rojas (Ret)', 'Ms. Regina T. Rojas'], mobileOrder: 2 },
   { title: 'Principal Sponsors', columns: [
-    ['Hon. Eric T. Rodriguez', 'Mr. Arcangel T. Rodriguez', 'Mr. Henry B. Tipay', 'Mr. Charles Andrew -- Hoar', 'Dr. Edna T. Villamor', 'Engr. Roselle C. Turreda', 'Ms. Helen V. Diaz'],
-    ['Hon. Eddie D. Vitalicio', 'Mr. Sulastiano -- Evangelista', 'Mr. Mario -- Diaz', 'Dr. Susan C. Collano', 'Engr. Rosana T. Camacho', 'Ms. Maria Teresa P. Tipay', 'Ms. Romina C. Hoar'],
+    ['Hon. Eric T. Rodriguez', 'Hon. Eddie D. Vitalicio', 'Mr. Arcangel T. Rodriguez', 'Mr. Sulastiano -- Evangelista', 'Mr. Henry B. Tipay', 'Mr. Mario -- Diaz', 'Mr. Charles Andrew -- Hoar'],
+    ['Dr. Susan C. Collano', 'Dr. Edna T. Villamor', 'Engr. Rosana T. Camacho', 'Engr. Roselle C. Turreda', 'Ms. Maria Teresa P. Tipay', 'Ms. Helen V. Diaz', 'Ms. Romina C. Hoar'],
   ], mobileOrder: 3 },
   { title: 'Bestman', names: ['Atty. Aaron Chrysler G. Caadlawon'], mobileOrder: 4 },
   { title: 'Maid of Honor', names: ['Atty. Mary France S. Soquerata'], mobileOrder: 8 },
