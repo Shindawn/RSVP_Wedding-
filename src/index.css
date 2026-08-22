@@ -193,7 +193,7 @@ button { cursor: pointer; }
 .people-grid h3 { margin: 0; font-family: 'Montserrat', Arial, sans-serif; font-weight: 300; font-size: 28px; }
 .muted { color: #71808b; font-family: 'Montserrat', Arial, sans-serif; font-style: italic; font-weight: 400; font-size: 14px; line-height: 1.6; }
 .full-entourage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 34px; max-width: 1000px; max-height: 0; margin: 0 auto; overflow-x: hidden; overflow-y: hidden; opacity: 0; transition: max-height .85s cubic-bezier(.22,1,.36,1), opacity .45s ease, margin .6s ease; }
-.full-entourage--open { max-height: min(72vh, 760px); margin-top: 34px; overflow-y: auto; opacity: 1; }
+.full-entourage--open { max-height: 5000px; margin-top: 34px; overflow: visible; opacity: 1; }
 .entourage-group { min-height: 0; padding: 10px 8px; text-align: center; }
 .entourage-group:nth-child(2),
 .entourage-group:nth-child(5),
@@ -221,8 +221,13 @@ button { cursor: pointer; }
 .entourage-group:nth-child(4) span { display: block; width: auto; }
 .entourage-group:nth-child(4) span:nth-child(odd) { text-align: right; }
 .entourage-group:nth-child(4) span:nth-child(even) { text-align: left; }
-.entourage-group .eyebrow { margin-bottom: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.entourage-group .eyebrow { margin-bottom: 14px; text-decoration: none; font-weight: 700; }
 .entourage-group--nested { grid-column: 1 / -1; text-align: center !important; }
+.entourage-group--columns .eyebrow { margin-bottom: 22px; }
+.entourage-sponsor-rows { display: grid; gap: 13px; }
+.entourage-sponsor-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.entourage-sponsor-row span:first-child { text-align: right; }
+.entourage-sponsor-row span:last-child { text-align: left; }
 .offertory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 24px; }
 .offertory-item .eyebrow { margin-bottom: 10px; }
 .offertory-item span { display: block; }
@@ -801,7 +806,7 @@ button { cursor: pointer; }
   }
 
   .full-entourage--open {
-    max-height: 70vh;
+    max-height: 5000px;
   }
 
   .entourage-group:first-child,
@@ -812,6 +817,10 @@ button { cursor: pointer; }
 
   .entourage-group:nth-child(4) {
     display: block;
+  }
+
+  .entourage-columns {
+    column-gap: 12px;
   }
 
   .entourage-section .entourage-group {
