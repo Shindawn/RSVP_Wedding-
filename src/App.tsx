@@ -25,7 +25,7 @@ const allGalleryImages = [
 const entourageGroups = [
   { title: 'Officiating Priest', names: ['Most Rev. Jose R. Rojas, Jr., D.D.'] },
   { title: 'Parents of the Groom', names: ['Mr. Charles M. Caadlawon', 'Engr. Precita G. Caadlawon'] },
-  { title: 'Parents of the Bride', names: ['PLTCOL Francisco R. Rojas (Ret)', 'Ms. Regina T. Rojas'] },
+  { title: 'Parents of the Bride', names: ['PLTCOL Francisco R Rojas (Ret)', 'Ms. Regina T. Rojas'] },
   { title: 'Principal Sponsors', columns: [
     ['Hon. Eric T. Rodriguez', 'Mr. Arcangel T. Rodriguez', 'Mr. Henry B. Tipay', 'Mr. Charles Andrew -- Hoar', 'Dr. Edna T. Villamor', 'Engr. Roselle C. Turreda', 'Ms. Helen V. Diaz'],
     ['Hon. Eddie D. Vitalicio', 'Mr. Sulastiano -- Evangelista', 'Mr. Mario -- Diaz', 'Dr. Susan C. Collano', 'Engr. Rosana T. Camacho', 'Ms. Maria Teresa P. Tipay', 'Ms. Romina C. Hoar'],

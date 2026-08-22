@@ -585,8 +585,9 @@ button { cursor: pointer; }
   .nav-links {
     position: absolute;
     top: 70px;
-    left: auto;
+    left: unset;
     right: 16px;
+    transform: none;
     display: none;
     flex-direction: column;
     gap: 0;
