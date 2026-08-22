@@ -595,12 +595,6 @@ useEffect(() => {
   </div>
 
   <div className="gallery-heading">
-    <AnimatedHeading
-      lines={[
-        { text: 'Moments we' },
-        { text: 'keep close.', italic: true }
-      ]}
-    />
 
   </div>
 
