@@ -838,6 +838,15 @@ button { cursor: pointer; }
     text-align: center;
   }
 
+  .entourage-sponsor-row {
+    grid-template-columns: 1fr;
+  }
+
+  .entourage-sponsor-row span:first-child,
+  .entourage-sponsor-row span:last-child {
+    text-align: center;
+  }
+
   .offertory-grid {
     grid-template-columns: 1fr;
   }
