@@ -23,18 +23,26 @@ const allGalleryImages = [
 ];
 
 const entourageGroups = [
-  { title: 'Parents of the groom', names: ['Names to be confirmed'] },
-  { title: 'Parents of the bride', names: ['Names to be confirmed'] },
-  { title: 'Principal sponsors', names: ['Ninongs & Ninangs', 'Names to be confirmed'] },
-  { title: 'Candle sponsors', names: ['Names to be confirmed'] },
-  { title: 'Veil sponsors', names: ['Names to be confirmed'] },
-  { title: 'Cord sponsors', names: ['Names to be confirmed'] },
-  { title: 'Groomsmen', names: ['Names to be confirmed'] },
-  { title: 'Bridesmaids', names: ['Names to be confirmed'] },
-  { title: 'Bible bearer', names: ['Name to be confirmed'] },
-  { title: 'Ring bearer', names: ['Name to be confirmed'] },
-  { title: 'Coin bearer', names: ['Name to be confirmed'] },
-  { title: 'Flower girls', names: ['Names to be confirmed'] },
+  { title: 'Officiating Priest', names: ['Most Rev. Jose R. Rojas, Jr., D.D.'] },
+  { title: 'Parents of the Groom', names: ['Mr. Charles M. Caadlawon', 'Engr. Precita G. Caadlawon'] },
+  { title: 'Parents of the Bride', names: ['PLTCOL Francisco R. Rojas (Ret)', 'Ms. Regina T. Rojas'] },
+  { title: 'Principal Sponsors', names: ['Hon. Eric T. Rodriguez', 'Hon. Eddie D. Vitalicio', 'Mr. Arcangel T. Rodriguez', 'Mr. Sulastiano -- Evangelista', 'Mr. Henry B. Tipay', 'Mr. Mario -- Diaz', 'Mr. Charles Andrew -- Hoar', 'Dr. Susan C. Collano', 'Dr. Edna T. Villamor', 'Engr. Rosana T. Camacho', 'Engr. Roselle C. Turreda', 'Ms. Maria Teresa P. Tipay', 'Ms. Helen V. Diaz', 'Ms. Romina C. Hoar'] },
+  { title: 'Bestman', names: ['Atty. Aaron Chrysler G. Caadlawon'] },
+  { title: 'Maid of Honor', names: ['Atty. Mary France S. Soquerata'] },
+  { title: 'Matron of Honor', names: ['Ms. Ghenna R. Salamat'] },
+  { title: 'Groomsmen', names: ['Engr. Romeo S. Coronejo', 'Mr. Franklin S. Oclarino', 'Atty. Michael Angelo V. Marquez', 'Hon. Emil Kurt C. Villaforta', 'Mr. Lorenz Kurt C. Abrazaldo'] },
+  { title: 'Bridesmaids', names: ['Ms. Christine Joy T. Camacho', 'Atty. Judea Lynn Q. Ballesteros', 'Atty. Michelli B. Samonte', 'Atty. Jan Elna A. Natividad-Casipong', 'Ms. Denn Reed -- Magbanua'] },
+  { title: 'Candle', names: ['Mr. Frank Scott T. Rojas', 'Dr. Mary Grace B. Rojas'] },
+  { title: 'Veil', names: ['Engr. Chris Angelo G. Caadlawon', 'Ms. Irish M. Caadlawon'] },
+  { title: 'Cord', names: ['Mr. Mark Lester V. Urbano', 'Ms. Chelou Mae B. Bautista'] },
+  { title: 'Rosary', names: ['Mr. Jedy C. Orcales', 'Ms. Jessabel M. Coronejo'] },
+  { title: 'Ring Bearer', names: ['Kaden B. Rojas'] },
+  { title: 'Coin Bearer', names: ['Cassius T. Caadlawon'] },
+  { title: 'Bible Bearer', names: ['Lucas M. Caadlawon'] },
+  { title: 'Crucifix Bearer', names: ['Ethan C. Arcilla'] },
+  { title: 'Flower Girls', names: ['Yzabella R. Salamat', 'Kiara B. Rojas', 'Diane Faye S. Tipay', 'Faith -- Tebelin', 'Hope -- Tebelin'] },
+  { title: 'Flower Ladies', names: ['Engr. Shane T. Magtagnob', 'Ms. Maria Azucena P. Evangelista', 'Ms. Jemarie - Darisan', 'Ms. Janine - Villacorta'] },
+  { title: 'Offertory', names: ['Bread', 'Egg', 'Flowers', 'Fruits', 'Candle', 'Wine'] },
 ];
 
 function AnimatedHeading({ lines, className = '' }: { lines: Array<{ text: string; italic?: boolean }>; className?: string }) {
@@ -564,7 +572,7 @@ useEffect(() => {
 
       <section className="dress-section section-pad reveal-on-scroll"><div className="dress-content"><p className="eyebrow">Dress code</p><AnimatedHeading lines={[{ text: 'Dusty blue' }, { text: 'and formal.', italic: true }]} /><p className="body-copy">We would love to see you in soft, romantic tones. Gentlemen in navy, charcoal, or dusty blue; ladies in ice blue, champagne, or silver.</p><div className="swatches"><span className="swatch ice" /><span className="swatch dusty" /><span className="swatch navy" /><span className="swatch silver" /><span className="swatch champagne" /></div><p className="tiny-note">Please avoid wearing white.</p></div><div className="dress-image" style={{ backgroundImage: `url(${dressCodeImage})` }} /></section>
 
-      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="center-heading"><p className="eyebrow blue">With our favorite people</p><AnimatedHeading lines={[{ text: 'The ones who make' }, { text: 'our story complete.', italic: true }]} /></div><div className="people-grid"><div><p className="eyebrow blue">Matron of honor</p><h3>Liza Mendoza</h3><p className="muted">The calm in every storm<br />and our forever friend.</p></div><div><p className="eyebrow blue">Maid of honor</p><h3>Angelica Santos</h3><p className="muted">A little bit of sunshine<br />in human form.</p></div><div><p className="eyebrow blue">Best man</p><h3>Joshua Garcia</h3><p className="muted">Brother by choice,<br />family by heart.</p></div></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className="entourage-group" key={group.title}><p className="eyebrow blue">{group.title}</p>{group.names.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
+      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="center-heading"><p className="eyebrow blue">With our favorite people</p><AnimatedHeading lines={[{ text: 'The ones who make' }, { text: 'our story complete.', italic: true }]} /></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className="entourage-group" key={group.title}><p className="eyebrow blue">{group.title}</p>{group.names.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
 
       <section
   className="gallery-section section-pad reveal-on-scroll"
