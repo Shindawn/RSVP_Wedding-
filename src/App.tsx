@@ -1,6 +1,6 @@
-﻿import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CSSProperties } from 'react';
-import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, Building2, Camera, Check, ChevronDown, Church, Clock3, Flower2, GlassWater, MapPin, Menu, Music2, UsersRound, ChevronLeft, ChevronRight, X, Eye, EyeOff, Lock } from 'lucide-react';
 import { entourageGroups } from './entourageData';
 
 
@@ -29,6 +29,10 @@ function AnimatedHeading({ lines, className = '' }: { lines: Array<{ text: strin
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [passcode, setPasscode] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [showPasscode, setShowPasscode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [rsvpOpen, setRsvpOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -345,6 +349,37 @@ useEffect(() => {
 
   const closeRsvp = () => setRsvpOpen(false);
 
+  const handleCardClick = () => {
+    setAuthModalOpen(true);
+    setPasscode('');
+    setAuthError('');
+    setShowPasscode(false);
+  };
+
+  const closeAuthModal = () => {
+    setAuthModalOpen(false);
+    setPasscode('');
+    setAuthError('');
+    setShowPasscode(false);
+  };
+
+  const handleAuthSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const validPasscode = (import.meta.env.VITE_INVITATION_PASSCODE as string | undefined) || '123';
+    if (passcode.trim() === validPasscode) {
+      setAuthModalOpen(false);
+      setIsOpen(true);
+      setAuthError('');
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.volume = 0.25;
+        audioRef.current.play().catch(() => {});
+      }
+    } else {
+      setAuthError('Incorrect passcode. Please try again.');
+    }
+  };
+
   const handleRsvpSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formspreeId = import.meta.env.VITE_FORMSPREE_FORM_ID as string | undefined;
@@ -442,14 +477,7 @@ useEffect(() => {
 
         <button
           className="invitation-card"
-          onClick={() => {
-            setIsOpen(true);
-            if (audioRef.current) {
-              audioRef.current.currentTime = 0;
-              audioRef.current.volume = 0.25;
-              audioRef.current.play().catch(() => {});
-            }
-          }}
+          onClick={handleCardClick}
           aria-label="Open Charlon and Chilzia's wedding invitation"
         >
           <span className="invitation-card-glow" />
@@ -550,7 +578,7 @@ useEffect(() => {
 
       <section className="dress-section section-pad reveal-on-scroll"><div className="dress-content"><p className="eyebrow">Dress code</p><AnimatedHeading lines={[{ text: 'Dusty blue' }, { text: 'and formal.', italic: true }]} /><p className="body-copy">We would love to see you in soft, romantic tones. Gentlemen in navy, charcoal, or dusty blue; ladies in ice blue, champagne, or silver.</p><div className="swatches"><span className="swatch ice" /><span className="swatch dusty" /><span className="swatch navy" /><span className="swatch silver" /><span className="swatch champagne" /></div><p className="tiny-note">Please avoid wearing white.</p></div><div className="dress-image" style={{ backgroundImage: `url(${dressCodeImage})` }} /></section>
 
-      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="entourage-preview"><h2>Caadlawon &amp; Rojas</h2><p>Nuptials</p></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className={`entourage-group${group.subgroups || group.columns ? ' entourage-group--nested' : ''}${group.columns ? ' entourage-group--columns' : ''}`} style={{ '--mobile-order': group.mobileOrder } as CSSProperties} key={group.title}><p className="eyebrow blue">{group.title}</p>{group.columns ? <div className="entourage-sponsor-rows">{Array.from({ length: Math.max(...group.columns.map(column => column.length)) }, (_, rowIndex) => <div className="entourage-sponsor-row" key={rowIndex}><span>{group.columns[0][rowIndex] ?? ''}</span><span>{group.columns[1][rowIndex] ?? ''}</span></div>)}</div> : group.subgroups ? <div className="offertory-grid">{group.subgroups.map(subgroup => <div className="offertory-item" key={subgroup.title}><p className="eyebrow blue">{subgroup.title}</p>{subgroup.names.map(name => <span key={name}>{name}</span>)}</div>)}</div> : group.names?.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
+      <section className="entourage-section section-pad reveal-on-scroll" id="entourage"><div className="section-label"><span>03</span><span className="label-line" /><span>ENTOURAGE</span></div><div className="entourage-preview"><h2>Caadlawon &amp; Rojas</h2><p>Nuptials</p></div><div className={`full-entourage ${showFullEntourage ? 'full-entourage--open' : ''}`} id="full-entourage">{entourageGroups.map(group => <article className={`entourage-group${group.subgroups || group.columns ? ' entourage-group--nested' : ''}${group.columns ? ' entourage-group--columns' : ''}`} style={{ '--mobile-order': group.mobileOrder } as CSSProperties} key={group.title}><p className="eyebrow blue">{group.title}</p>{group.columns ? <div className="entourage-sponsor-rows">{Array.from({ length: Math.max(...group.columns.map(column => column.length)) }, (_, rowIndex) => <div className="entourage-sponsor-row" key={rowIndex}><span>{group.columns?.[0]?.[rowIndex] ?? ''}</span><span>{group.columns?.[1]?.[rowIndex] ?? ''}</span></div>)}</div> : group.subgroups ? <div className="offertory-grid">{group.subgroups.map(subgroup => <div className="offertory-item" key={subgroup.title}><p className="eyebrow blue">{subgroup.title}</p>{subgroup.names.map(name => <span key={name}>{name}</span>)}</div>)}</div> : group.names?.map(name => <span key={name}>{name}</span>)}</article>)}</div><button className="entourage-toggle" onClick={() => setShowFullEntourage(!showFullEntourage)} aria-expanded={showFullEntourage} aria-controls="full-entourage">{showFullEntourage ? 'Show less' : 'View full entourage'} <ChevronDown className={showFullEntourage ? 'chevron-up' : ''} size={16} /></button></section>
 
       <section
   className="gallery-section section-pad reveal-on-scroll"
@@ -749,6 +777,58 @@ useEffect(() => {
     </button>
   </div>
 )}
+
+      {authModalOpen && (
+        <div className="modal-backdrop auth-modal-backdrop" onClick={closeAuthModal}>
+          <div className="rsvp-modal auth-modal" onClick={event => event.stopPropagation()}>
+            <button className="modal-close" onClick={closeAuthModal} aria-label="Close passcode dialog">
+              <X size={18} />
+            </button>
+            <div className="auth-modal-header">
+              <div className="auth-modal-icon">
+                <Lock size={22} />
+              </div>
+              <p className="eyebrow blue">Private Invitation</p>
+              <h2 className="modal-title">Enter <i>Passcode</i></h2>
+              <p className="auth-modal-desc">
+                Please enter the passcode to view the wedding details and RSVP.
+              </p>
+            </div>
+            <form onSubmit={handleAuthSubmit} className="auth-form">
+              <label>
+                Passcode
+                <div className="passcode-input-wrap">
+                  <input
+                    type={showPasscode ? 'text' : 'password'}
+                    name="passcode"
+                    required
+                    autoFocus
+                    placeholder="Enter passcode"
+                    value={passcode}
+                    onChange={event => {
+                      setPasscode(event.target.value);
+                      if (authError) setAuthError('');
+                    }}
+                    className={authError ? 'input-error' : ''}
+                  />
+                  <button
+                    type="button"
+                    className="passcode-toggle-btn"
+                    onClick={() => setShowPasscode(!showPasscode)}
+                    aria-label={showPasscode ? 'Hide passcode' : 'Show passcode'}
+                  >
+                    {showPasscode ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </label>
+              {authError && <p className="form-error" role="alert">{authError}</p>}
+              <button className="button-dark auth-submit-btn" type="submit">
+                Unlock Invitation <ArrowRight size={16} />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {rsvpOpen && (
         <div className="modal-backdrop" onClick={closeRsvp}>
