@@ -25,7 +25,7 @@ button { cursor: pointer; }
 .text-link { display: inline-flex; gap: 10px; align-items: center; border: 0; border-bottom: 1px solid currentColor; background: none; padding: 0 0 9px; margin-top: 30px; color: var(--ink); font-family: 'Montserrat', Arial, sans-serif; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; }
 .text-link.light { color: white; }
 
-.invitation-cover { position: fixed; z-index: 20; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 24px clamp(50px, 9vh, 95px); background: #ffffff; transition: transform 1.15s cubic-bezier(.76,0,.24,1), opacity .9s ease .18s, visibility 1.15s; }
+.invitation-cover { position: fixed; z-index: 20; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 24px clamp(60px, 10vh, 90px); background: #ffffff; transition: transform 1.15s cubic-bezier(.76,0,.24,1), opacity .9s ease .18s, visibility 1.15s; }
 .invitation-cover--open { transform: translateY(-100%); opacity: 0; visibility: hidden; pointer-events: none; }
 
 .cover-monogram { position: relative; width: clamp(54px, 6.5vw, 72px); aspect-ratio: 1; display: grid; place-items: center; margin-bottom: clamp(10px, 1.5vh, 18px); flex-shrink: 0; }
@@ -33,7 +33,7 @@ button { cursor: pointer; }
 .cover-monogram-source { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .cover-monogram-canvas { display: block; width: 100%; height: auto; }
 
-.invitation-card { position: relative; width: clamp(170px, 20vw, 230px); max-height: min(46vh, 345px); aspect-ratio: 2 / 3; margin-top: 0; border: 0; padding: 0; background: #c9dfe9; overflow: hidden; flex-shrink: 0; }
+.invitation-card { position: relative; width: clamp(170px, 20vw, 230px); max-height: min(44vh, 330px); aspect-ratio: 2 / 3; margin-top: 0; border: 0; padding: 0; background: #c9dfe9; overflow: hidden; flex-shrink: 0; }
 .invitation-card::after { content: ''; position: absolute; z-index: 2; inset: 0; pointer-events: none; background: rgba(164, 204, 222, .52); mix-blend-mode: color; }
 .invitation-card img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(1) contrast(.92) brightness(1.08); }
 .invitation-card-glow { display: none; }
@@ -45,7 +45,7 @@ button { cursor: pointer; }
 .cover-names { margin-top: clamp(12px, 1.6vh, 18px); color: #002734; font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; font-size: clamp(14px, 1.9vw, 19px); letter-spacing: .48em; text-transform: uppercase; white-space: nowrap; transform: translateX(.24em); flex-shrink: 0; }
 .cover-names span { font-style: normal; font-weight: 300; letter-spacing: 0; margin: 0 4px; }
 
-.cover-details { position: static; display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: clamp(10px, 1.6vh, 18px); color: #173c49; font-family: 'Montserrat', Arial, sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0; text-transform: uppercase; text-align: center; white-space: nowrap; flex-shrink: 0; }
+.cover-details { position: absolute; left: 50%; bottom: clamp(18px, 4vh, 36px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; color: #173c49; font-family: 'Montserrat', Arial, sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0; text-transform: uppercase; text-align: center; white-space: nowrap; }
 
 @media (min-width: 769px) {
   .invitation-card {
@@ -1041,7 +1041,7 @@ input[type="password"]::-ms-clear {
     width: min(176px, 46vw, 27vh);
   }
 
-  .cover-monogram { margin-bottom: 10px; }
-  .cover-names { margin-top: 10px; }
-  .cover-details { margin-top: 10px; }
+  .cover-monogram { margin-bottom: 8px; }
+  .cover-names { margin-top: 8px; }
+  .cover-details { bottom: clamp(14px, 2.8vh, 22px); }
 }
